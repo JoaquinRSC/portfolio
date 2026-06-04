@@ -1,0 +1,20 @@
+{
+  "orders": [
+    { "name": "AK-47 | Redline (Field-Tested)", "price": 18.5, "qty": 3 },
+    { "name": "AWP | Asiimov (Field-Tested)", "price": 42.0, "qty": 2 },
+    { "name": "M4A4 | Desolate Space (Minimal Wear)", "price": 12.3, "qty": 4 },
+    { "name": "Glock-18 | Water Elemental (Factory New)", "price": 8.75, "qty": 5 },
+    { "name": "USP-S | Kill Confirmed (Minimal Wear)", "price": 35.0, "qty": 2 },
+    { "name": "Desert Eagle | Blaze (Factory New)", "price": 55.0, "qty": 1 },
+    { "name": "AK-47 | Asiimov (Field-Tested)", "price": 28.4, "qty": 2 },
+    { "name": "M4A1-S | Hyper Beast (Minimal Wear)", "price": 16.2, "qty": 3 },
+    { "name": "AWP | Hyper Beast (Field-Tested)", "price": 22.1, "qty": 3 },
+    { "name": "Five-SeveN | Case Hardened (Field-Tested)", "price": 4.5, "qty": 8 },
+    { "name": "P250 | Asiimov (Factory New)", "price": 6.3, "qty": 6 },
+    { "name": "MAC-10 | Neon Rider (Factory New)", "price": 5.1, "qty": 7 },
+    { "name": "SSG 08 | Dragonfire (Field-Tested)", "price": 9.8, "qty": 4 },
+    { "name": "Galil AR | Chatterbox (Field-Tested)", "price": 14.6, "qty": 3 },
+    { "name": "MP9 | Starlight Protector (Factory New)", "price": 7.2, "qty": 5 },
+    { "name": "Tec-9 | Fuel Injector (Factory New)", "price": 11.4, "qty": 4 }
+  ]
+}

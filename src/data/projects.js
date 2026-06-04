@@ -38,7 +38,8 @@ export const projects = [
       'Node.js web app that automates CS2 buy orders on CSFloat using live Buff163 prices (via SkinsTrack). Scans a skin pool, compares against CSFloat top buy orders, and places orders that pass a ratio filter, plus a background scanner that flags listings cheap enough to flip. Handles per-skin float ranges, pause/resume, and Cloudflare rate-limit backoff.',
     language: 'JavaScript',
     private: true,
-    screenshots: [], // e.g. ['/projects/csfloat-1.png', '/projects/csfloat-2.png']
+    demo: '/demos/csfloat/', // read-only UI snapshot with sample data, embedded in-page
+    screenshots: ['/projects/csfloat-1.png'],
     gradient: 'linear-gradient(135deg, #1a1400 0%, #2d2200 50%, #f59e0b18 100%)',
     accent: '#f59e0b',
   },

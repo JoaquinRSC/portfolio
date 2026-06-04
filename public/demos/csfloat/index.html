@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--
+  CSFloat Buy Orders — DEMO (read-only).
+  Static snapshot adapted from the project's public/index-readonly.html. It reads
+  bundled sample data (buy-orders.json) instead of the live /buy-orders endpoint,
+  so it runs with no backend, no API keys, and no real account data.
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSFloat — Buy Orders (Demo)</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #111; color: #eee; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; }
+
+    .demo-banner { background: rgba(76,175,80,0.12); color: #7ddc83; text-align: center; padding: 7px 12px; font-size: 12px; font-weight: 600; border-bottom: 1px solid rgba(76,175,80,0.28); }
+
+    .topbar { background: #1a1a1a; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a2a2a; position: sticky; top: 0; z-index: 10; }
+    .topbar-title { font-size: 16px; font-weight: 600; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .badge { padding: 4px 11px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #333; }
+    .badge.ok { background: #2e7d32; }
+    .refresh-btn { background: none; border: 1px solid #333; color: #aaa; border-radius: 8px; padding: 5px 12px; font-size: 12px; cursor: pointer; }
+    .refresh-btn:hover { border-color: #555; color: #eee; }
+
+    .content { padding: 16px 20px; max-width: 700px; margin: 0 auto; }
+
+    .summary { display: flex; gap: 10px; margin-bottom: 16px; }
+    .stat { flex: 1; background: #1a1a1a; border-radius: 10px; padding: 14px 10px; text-align: center; }
+    .stat-n { font-size: 28px; font-weight: 700; color: #4caf50; }
+    .stat-l { font-size: 11px; color: #666; margin-top: 3px; }
+
+    .updated { font-size: 11px; color: #444; margin-bottom: 12px; }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { border-bottom: 1px solid #2a2a2a; }
+    th { text-align: left; font-size: 11px; color: #555; font-weight: 600; padding: 8px 10px; text-transform: uppercase; letter-spacing: .04em; }
+    td { padding: 10px 10px; border-bottom: 1px solid #1a1a1a; font-size: 13px; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #181818; }
+
+    .price { font-weight: 600; color: #81c784; }
+    .qty { color: #aaa; }
+    .name { color: #eee; }
+
+    .empty { text-align: center; color: #444; padding: 40px 0; font-size: 14px; }
+    .error-msg { color: #ef5350; font-size: 13px; padding: 20px 0; text-align: center; }
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #333; border-top-color: #4caf50; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<div class="demo-banner">Demo · datos de ejemplo · sin conexión a APIs reales</div>
+
+<div class="topbar">
+  <span class="topbar-title">CSFloat — Buy Orders</span>
+  <div class="topbar-right">
+    <span class="badge" id="badge">Cargando...</span>
+    <button class="refresh-btn" onclick="load()">Actualizar</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="summary">
+    <div class="stat"><div class="stat-n" id="s-count">—</div><div class="stat-l">Buy orders activas</div></div>
+    <div class="stat"><div class="stat-n" id="s-total" style="color:#42a5f5">—</div><div class="stat-l">Total invertido</div></div>
+    <div class="stat"><div class="stat-n" id="s-avg" style="color:#ffa726">—</div><div class="stat-l">Precio promedio</div></div>
+  </div>
+
+  <div class="updated" id="updated"></div>
+
+  <div id="content">
+    <div class="empty"><span class="spinner"></span>Cargando órdenes...</div>
+  </div>
+</div>
+
+<script>
+async function load() {
+  document.getElementById('badge').textContent = 'Actualizando...';
+  document.getElementById('badge').className = 'badge';
+  try {
+    const res = await fetch('buy-orders.json?t=' + Date.now());
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const { orders } = await res.json();
+    render(orders);
+    document.getElementById('badge').textContent = `${orders.length} órdenes`;
+    document.getElementById('badge').className = 'badge ok';
+    document.getElementById('updated').textContent = `Actualizado: ${new Date().toLocaleTimeString()}`;
+  } catch (e) {
+    document.getElementById('content').innerHTML = `<div class="error-msg">Error cargando órdenes: ${e.message}</div>`;
+    document.getElementById('badge').textContent = 'Error';
+    document.getElementById('badge').className = 'badge';
+  }
+}
+
+function render(orders) {
+  const count = orders.length;
+  const total = orders.reduce((s, o) => s + o.price * o.qty, 0);
+  const avg   = count ? total / count : 0;
+
+  document.getElementById('s-count').textContent = count;
+  document.getElementById('s-total').textContent = '$' + total.toFixed(2);
+  document.getElementById('s-avg').textContent   = '$' + avg.toFixed(2);
+
+  if (count === 0) {
+    document.getElementById('content').innerHTML = '<div class="empty">No hay buy orders activas.</div>';
+    return;
+  }
+
+  const rows = orders.map(o => `
+    <tr>
+      <td class="name">${escHtml(o.name)}</td>
+      <td class="price">$${o.price.toFixed(2)}</td>
+      <td class="qty">×${o.qty}</td>
+      <td class="price" style="color:#42a5f5">$${(o.price * o.qty).toFixed(2)}</td>
+    </tr>`).join('');
+
+  document.getElementById('content').innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Skin</th>
+        <th>Precio</th>
+        <th>Cant.</th>
+        <th>Subtotal</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+load();
+</script>
+</body>
+</html>
