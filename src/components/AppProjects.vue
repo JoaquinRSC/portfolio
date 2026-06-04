@@ -4,20 +4,40 @@
       <div class="section-header reveal">
         <div class="section-label">// 01 &mdash; projects</div>
         <h2 class="section-title">Things I've built</h2>
-        <p class="section-sub">A selection of personal and professional projects</p>
+        <p class="section-sub">
+          Live demos where possible, and sanitized previews of private work
+        </p>
       </div>
 
       <div class="projects-grid reveal" style="--delay: 0.1s">
-        <a
+        <article
           v-for="project in projects"
           :key="project.name"
-          :href="project.url"
-          target="_blank"
-          rel="noopener"
           class="project-card"
         >
-          <div class="project-preview" :style="{ background: project.gradient }">
-            <div class="mockup">
+          <div
+            class="project-preview"
+            :class="{ clickable: hasAction(project) }"
+            :style="project.screenshots?.length ? null : { background: project.gradient }"
+            role="button"
+            tabindex="0"
+            @click="onPreviewClick(project)"
+            @keydown.enter="onPreviewClick(project)"
+          >
+            <template v-if="project.screenshots?.length">
+              <img
+                :src="project.screenshots[0]"
+                :alt="`${project.name} screenshot`"
+                class="preview-img"
+                loading="lazy"
+              />
+              <div class="preview-zoom">
+                ⤢ {{ project.screenshots.length }}
+                screenshot{{ project.screenshots.length > 1 ? 's' : '' }}
+              </div>
+            </template>
+
+            <div v-else class="mockup">
               <div class="mockup-bar">
                 <span class="mockup-dot" />
                 <span class="mockup-dot" />
@@ -41,7 +61,9 @@
           <div class="project-body">
             <div class="project-header">
               <span class="project-name">{{ project.name }}</span>
-              <span v-if="project.live" class="live-badge">Live</span>
+              <span v-if="project.live" class="badge badge-live">Live</span>
+              <span v-else-if="project.wip" class="badge badge-wip">In Progress</span>
+              <span v-if="project.private" class="badge badge-private">Private</span>
             </div>
             <p class="project-desc">{{ project.description }}</p>
             <div class="project-footer">
@@ -49,10 +71,27 @@
                 <span class="lang-dot" :style="{ background: langColor(project.language) }" />
                 {{ project.language }}
               </span>
-              <span class="view-hint">Open ↗</span>
+              <a
+                v-if="project.url"
+                :href="project.url"
+                target="_blank"
+                rel="noopener"
+                class="action-hint"
+              >
+                Open ↗
+              </a>
+              <button
+                v-else-if="project.screenshots?.length"
+                type="button"
+                class="action-hint as-button"
+                @click="openLightbox(project)"
+              >
+                Screenshots ⤢
+              </button>
+              <span v-else class="action-hint muted">Code private</span>
             </div>
           </div>
-        </a>
+        </article>
       </div>
 
       <div class="section-more">
@@ -61,11 +100,62 @@
         </a>
       </div>
     </div>
+
+    <q-dialog v-model="lightbox.open">
+      <q-card class="lightbox-card">
+        <div class="lightbox-head">
+          <span class="lightbox-title">{{ lightbox.title }}</span>
+          <q-btn flat round dense icon="close" class="lightbox-close" @click="lightbox.open = false" />
+        </div>
+        <q-carousel
+          v-model="lightbox.slide"
+          animated
+          arrows
+          :navigation="lightbox.images.length > 1"
+          infinite
+          swipeable
+          control-color="primary"
+          height="68vh"
+          class="lightbox-carousel"
+        >
+          <q-carousel-slide
+            v-for="(src, i) in lightbox.images"
+            :key="i"
+            :name="i"
+            class="lightbox-slide"
+          >
+            <img :src="src" :alt="`${lightbox.title} screenshot ${i + 1}`" class="lightbox-img" />
+          </q-carousel-slide>
+        </q-carousel>
+      </q-card>
+    </q-dialog>
   </section>
 </template>
 
 <script setup>
+import { reactive } from 'vue'
 import { projects, langColor } from '../data/projects.js'
+
+const lightbox = reactive({ open: false, slide: 0, title: '', images: [] })
+
+function hasAction(project) {
+  return Boolean(project.screenshots?.length || project.url)
+}
+
+function openLightbox(project) {
+  lightbox.images = project.screenshots
+  lightbox.title = project.name
+  lightbox.slide = 0
+  lightbox.open = true
+}
+
+function onPreviewClick(project) {
+  if (project.screenshots?.length) {
+    openLightbox(project)
+  } else if (project.url) {
+    window.open(project.url, '_blank', 'noopener')
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -92,7 +182,8 @@ import { projects, langColor } from '../data/projects.js'
     transform: translateY(-4px);
     box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(34,197,94,0.08);
 
-    .view-hint { color: var(--accent); }
+    .action-hint:not(.muted) { color: var(--accent); }
+    .preview-img { transform: scale(1.04); }
   }
 }
 
@@ -101,6 +192,34 @@ import { projects, langColor } from '../data/projects.js'
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+
+  &.clickable { cursor: pointer; }
+  &:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.preview-zoom {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(6,11,6,0.7);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 5px;
+  padding: 3px 8px;
+  backdrop-filter: blur(4px);
 }
 
 .mockup {
@@ -195,18 +314,33 @@ import { projects, langColor } from '../data/projects.js'
   white-space: nowrap;
 }
 
-.live-badge {
+.badge {
   font-family: var(--mono);
   font-size: 9px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: var(--accent);
-  border: 1px solid rgba(34,197,94,0.35);
-  background: rgba(34,197,94,0.08);
   border-radius: 4px;
   padding: 2px 7px;
   flex-shrink: 0;
+}
+
+.badge-live {
+  color: var(--accent);
+  border: 1px solid rgba(34,197,94,0.35);
+  background: rgba(34,197,94,0.08);
+}
+
+.badge-wip {
+  color: #f59e0b;
+  border: 1px solid rgba(245,158,11,0.35);
+  background: rgba(245,158,11,0.08);
+}
+
+.badge-private {
+  color: #7a9a7a;
+  border: 1px solid var(--border2);
+  background: rgba(255,255,255,0.02);
 }
 
 .project-desc {
@@ -241,12 +375,20 @@ import { projects, langColor } from '../data/projects.js'
   flex-shrink: 0;
 }
 
-.view-hint {
+.action-hint {
   margin-left: auto;
   font-family: var(--mono);
   font-size: 11px;
   color: var(--muted);
   transition: color 0.15s;
+
+  &.as-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  &.muted { cursor: default; }
 }
 
 .section-more {
@@ -260,5 +402,45 @@ import { projects, langColor } from '../data/projects.js'
   color: var(--muted2);
   transition: color 0.15s;
   &:hover { color: var(--accent); }
+}
+
+/* Lightbox */
+.lightbox-card {
+  width: 100%;
+  max-width: 1000px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+}
+
+.lightbox-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.lightbox-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.lightbox-close { color: var(--muted2); }
+
+.lightbox-carousel { background: #000; }
+
+.lightbox-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 </style>

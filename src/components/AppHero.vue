@@ -15,8 +15,9 @@
         <span class="typed-text">{{ displayText }}</span><span class="cursor" aria-hidden="true">_</span>
       </div>
       <p class="hero-bio">
-        Computer Technology student from Uruguay. Building web apps,
-        automating workflows, and exploring data science &amp; AI.
+        IT student and full-stack developer from Uruguay. Building real-world
+        web apps with Vue, Quasar &amp; Node.js since 2019 — currently looking
+        for my first Junior / Trainee role.
       </p>
       <div class="hero-stats">
         <div class="stat-item">
@@ -47,7 +48,7 @@
 <script setup>
 import { useTypewriter } from '../composables/useTypewriter.js'
 
-const ROLES = ['Software Developer.', 'Web Developer.', 'Backend Developer.', 'Problem Solver.']
+const ROLES = ['Full Stack Developer.', 'Web Developer.', 'Backend Developer.', 'Problem Solver.']
 const { displayText } = useTypewriter(ROLES)
 </script>
 

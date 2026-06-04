@@ -1,16 +1,17 @@
 export const education = [
   {
     status: 'In Progress',
-    title: 'Computer Technology',
-    institution: 'UTU / Udelar / UTEC',
+    title: 'Technologist in Computer Science',
+    institution: 'UTU',
     description:
-      'Advanced coursework in OOP, databases, operating systems, computer architecture, and software engineering.',
+      'Software development, OOP, databases, operating systems, computer architecture, and software engineering.',
   },
   {
     status: 'Completed',
-    title: 'Technical Baccalaureate in IT',
+    title: 'Technological Baccalaureate in Computer Science',
     institution: 'UTU',
-    description: 'Programming fundamentals, IT support, networking, and web development.',
+    description:
+      'Technical high school degree covering programming, application analysis & design, and web development.',
   },
   {
     status: '2026',
