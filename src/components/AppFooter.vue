@@ -2,9 +2,19 @@
   <footer class="footer">
     <div class="container footer-inner">
       <span class="footer-copy">Built with Vue &amp; Quasar</span>
-      <a href="https://github.com/JoaquinRSC" target="_blank" rel="noopener" class="footer-link">
-        github.com/JoaquinRSC
-      </a>
+      <div class="footer-links">
+        <a href="https://github.com/JoaquinRSC" target="_blank" rel="noopener" class="footer-link">
+          github.com/JoaquinRSC
+        </a>
+        <a
+          href="https://www.linkedin.com/in/joaquin-rossi-dev"
+          target="_blank"
+          rel="noopener"
+          class="footer-link"
+        >
+          linkedin.com/in/joaquin-rossi-dev
+        </a>
+      </div>
       <span class="footer-loc">Montevideo, Uruguay</span>
     </div>
   </footer>
@@ -24,6 +34,13 @@
   gap: 8px;
   font-size: 12px;
   color: var(--muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .footer-link {
