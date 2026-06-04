@@ -27,7 +27,7 @@ export const projects = [
       'Vue 3 + Quasar PWA to track a CS2 skin investment portfolio. Syncs inventory from Google Sheets, enriches items with images and live Buff163 prices, and shows analytics (P&L, monthly profit, best/worst trades) plus arbitrage detection comparing skin.land vs Buff163.',
     language: 'Vue',
     live: true,
-    demo: 'https://skin-tracker-demo.vercel.app', // embedded in-page (iframe), sample data
+    demo: '/demos/skin-tracker/', // self-hosted demo build, embedded in-page (iframe)
     screenshots: ['/projects/skin-tracker-1.png'],
     gradient: 'linear-gradient(135deg, #0a0f0a 0%, #0d1f0d 50%, #41b88318 100%)',
     accent: '#41b883',
