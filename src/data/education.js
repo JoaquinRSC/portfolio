@@ -13,10 +13,4 @@ export const education = [
     description:
       'Technical high school degree covering programming, application analysis & design, and web development.',
   },
-  {
-    status: '2026',
-    title: 'Data Science School',
-    institution: 'Platzi',
-    description: 'Data science, databases, and analytical tools.',
-  },
 ]
