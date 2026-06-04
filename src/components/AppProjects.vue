@@ -32,8 +32,11 @@
                 loading="lazy"
               />
               <div class="preview-zoom">
-                ⤢ {{ project.screenshots.length }}
-                screenshot{{ project.screenshots.length > 1 ? 's' : '' }}
+                <template v-if="project.demo">▶ Try it live</template>
+                <template v-else>
+                  ⤢ {{ project.screenshots.length }}
+                  screenshot{{ project.screenshots.length > 1 ? 's' : '' }}
+                </template>
               </div>
             </template>
 
@@ -71,8 +74,16 @@
                 <span class="lang-dot" :style="{ background: langColor(project.language) }" />
                 {{ project.language }}
               </span>
+              <button
+                v-if="project.demo"
+                type="button"
+                class="action-hint as-button"
+                @click="openEmbed(project)"
+              >
+                Try demo ▶
+              </button>
               <a
-                v-if="project.url"
+                v-else-if="project.url"
                 :href="project.url"
                 target="_blank"
                 rel="noopener"
@@ -129,6 +140,27 @@
         </q-carousel>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="embed.open" maximized @hide="embed.url = ''">
+      <q-card class="embed-card">
+        <div class="embed-head">
+          <span class="embed-title">{{ embed.title }} · live demo · sample data</span>
+          <div class="embed-actions">
+            <a :href="embed.url" target="_blank" rel="noopener" class="embed-open">
+              Open in new tab ↗
+            </a>
+            <q-btn flat round dense icon="close" class="lightbox-close" @click="embed.open = false" />
+          </div>
+        </div>
+        <iframe
+          v-if="embed.url"
+          :src="embed.url"
+          class="embed-frame"
+          title="Live demo"
+          loading="lazy"
+        />
+      </q-card>
+    </q-dialog>
   </section>
 </template>
 
@@ -137,9 +169,10 @@ import { reactive } from 'vue'
 import { projects, langColor } from '../data/projects.js'
 
 const lightbox = reactive({ open: false, slide: 0, title: '', images: [] })
+const embed = reactive({ open: false, title: '', url: '' })
 
 function hasAction(project) {
-  return Boolean(project.screenshots?.length || project.url)
+  return Boolean(project.demo || project.screenshots?.length || project.url)
 }
 
 function openLightbox(project) {
@@ -149,8 +182,16 @@ function openLightbox(project) {
   lightbox.open = true
 }
 
+function openEmbed(project) {
+  embed.title = project.name
+  embed.url = project.demo
+  embed.open = true
+}
+
 function onPreviewClick(project) {
-  if (project.screenshots?.length) {
+  if (project.demo) {
+    openEmbed(project)
+  } else if (project.screenshots?.length) {
     openLightbox(project)
   } else if (project.url) {
     window.open(project.url, '_blank', 'noopener')
@@ -442,5 +483,57 @@ function onPreviewClick(project) {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+/* Embedded live demo */
+.embed-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.embed-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 8px 8px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.embed-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.embed-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.embed-open {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted2);
+  white-space: nowrap;
+  transition: color 0.15s;
+  &:hover { color: var(--accent); }
+}
+
+.embed-frame {
+  flex: 1;
+  width: 100%;
+  border: 0;
+  background: #060b06;
 }
 </style>
