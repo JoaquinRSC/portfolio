@@ -21,7 +21,7 @@ export const projects = [
   {
     name: 'CS2 Skin Tracker',
     description:
-      'Personal investment tracker for CS2 skins. Syncs from Google Sheets, enriches with Buff163 prices, and includes arbitrage detection against skin.land.',
+      'Vue 3 + Quasar PWA to track a CS2 skin investment portfolio. Syncs inventory from Google Sheets, enriches items with images and live Buff163 prices, and shows analytics (P&L, monthly profit, best/worst trades) plus arbitrage detection comparing skin.land vs Buff163.',
     language: 'Vue',
     url: 'https://skin-tracker-eight.vercel.app',
     live: true,
@@ -32,7 +32,7 @@ export const projects = [
   {
     name: 'CSFloat Buy Orders',
     description:
-      'Automates CS2 skin buy orders on CSFloat using live Buff163 prices. Features a web UI, SSE-based scanning, ratio caching, and a Tampermonkey userscript for browser-relayed price fetching.',
+      'Node.js web app that automates CS2 buy orders on CSFloat using live Buff163 prices (via SkinsTrack). Scans a skin pool, compares against CSFloat top buy orders, and places orders that pass a ratio filter, plus a background scanner that flags listings cheap enough to flip. Handles per-skin float ranges, pause/resume, and Cloudflare rate-limit backoff.',
     language: 'JavaScript',
     private: true,
     screenshots: [], // e.g. ['/projects/csfloat-1.png', '/projects/csfloat-2.png']
@@ -42,7 +42,7 @@ export const projects = [
   {
     name: 'MP Tracker',
     description:
-      'Scraper and tracker for car listings in Montevideo. Monitors price changes and new listings over time. Early-stage work in progress.',
+      'Puppeteer scraper that tracks online car listings in Montevideo, monitoring price drops and new listings over time. Early-stage work in progress.',
     language: 'JavaScript',
     private: true,
     wip: true,
