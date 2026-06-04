@@ -19,8 +19,8 @@
             class="project-preview"
             :class="{ clickable: hasAction(project) }"
             :style="project.screenshots?.length ? null : { background: project.gradient }"
-            role="button"
-            tabindex="0"
+            :role="hasAction(project) ? 'button' : null"
+            :tabindex="hasAction(project) ? 0 : null"
             @click="onPreviewClick(project)"
             @keydown.enter="onPreviewClick(project)"
           >
@@ -338,7 +338,7 @@ function onPreviewClick(project) {
 }
 
 .badge-private {
-  color: #7a9a7a;
+  color: var(--muted2);
   border: 1px solid var(--border2);
   background: rgba(255,255,255,0.02);
 }
