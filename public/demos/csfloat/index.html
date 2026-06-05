@@ -616,6 +616,7 @@
     /* ─── RESPONSIVE / MOBILE ─── */
     @media (max-width: 768px) {
       /* Let the page grow and scroll vertically instead of clipping. */
+      body { height: auto; min-height: 100vh; overflow-y: auto; }
       #app { height: auto; min-height: 100vh; }
       .main { flex-direction: column; overflow: visible; }
 
