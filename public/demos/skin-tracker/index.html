@@ -1,4 +1,32 @@
 <!doctype html><html lang=en><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon type=image/svg+xml href=/demos/skin-tracker/awp.svg><title>Skin Tracker</title>  <script type="module" crossorigin src="/demos/skin-tracker/assets/index-DOlRKq_q.js"></script>
   <link rel="modulepreload" crossorigin href="/demos/skin-tracker/assets/pinia-DqT_syEE.js">
   <link rel="stylesheet" crossorigin href="/demos/skin-tracker/assets/index-51ENoJEQ.css">
-</head><body><div id=q-app></div></body></html>
+  <!-- Portfolio demo chrome (injected manually; re-apply if this build is regenerated) -->
+  <style>
+    /* Hide scrollbars for a cleaner demo look (scroll still works). */
+    html { scrollbar-width: none; -ms-overflow-style: none; }
+    *::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+    /* Mobile: keep Monthly P&L bar values from overlapping by widening
+       columns and letting the chart scroll sideways instead of squashing. */
+    @media (max-width: 600px) {
+      .bar-chart { overflow-x: auto; }
+      .bar-col   { min-width: 46px; }
+      .bar-val   { font-size: 0.55rem; }
+    }
+
+    /* Floating "back to portfolio" link, shown only when this demo is the
+       top-level page (opened in a new tab), not inside the portfolio iframe. */
+    .demo-back {
+      position: fixed; left: 12px; bottom: 12px; z-index: 99999;
+      display: none; align-items: center; gap: 6px;
+      padding: 9px 14px; border-radius: 999px;
+      font: 600 13px/1 'Inter', system-ui, sans-serif;
+      color: #e8f5e8; background: rgba(6,11,6,.85);
+      border: 1px solid rgba(34,197,94,.4);
+      box-shadow: 0 6px 24px rgba(0,0,0,.5); backdrop-filter: blur(6px);
+      text-decoration: none;
+    }
+    .demo-back:hover { border-color: #22c55e; color: #22c55e; }
+  </style>
+</head><body><div id=q-app></div><a href="/#projects" class="demo-back" id="demo-back">&larr; Portfolio</a><script>if(window.self===window.top){var b=document.getElementById('demo-back');if(b)b.style.display='inline-flex';}</script></body></html>
