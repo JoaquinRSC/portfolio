@@ -641,8 +641,21 @@
       .stats { flex-wrap: wrap; }
       .stat { min-width: calc(50% - 4px); }
 
-      /* Give the log a usable height now that it no longer fills a fixed shell. */
-      .log-wrap { min-height: 60vh; }
+      /* Give the log a usable area, but CAP the scroll boxes so they scroll
+         internally instead of stretching the page on every new row. */
+      .log-wrap { min-height: 50vh; }
+      .log-box { max-height: 58vh; }
+
+      /* Tighten the result tables so the skin name keeps a readable width
+         instead of collapsing to a single letter behind the fixed columns. */
+      .log-cols, .log-row { grid-template-columns: 24px 1fr 54px 54px 44px; padding-left: 12px; padding-right: 12px; }
+      .opp-cols, .opp-row { grid-template-columns: 1fr 52px 52px 42px auto; padding-left: 12px; padding-right: 12px; }
+      .opp-info, .opp-filters { padding-left: 12px; padding-right: 12px; }
+      .log-line { padding-left: 12px; padding-right: 12px; }
+      .lr-name, .opp-name { padding-right: 8px; }
+      .lr-val, .opp-val { font-size: 11.5px; }
+      .lr-name, .opp-name { font-size: 12px; }
+      .log-cols span, .opp-cols span { font-size: 9px; letter-spacing: .06em; }
 
       /* Keep the run/maintain modal inside the viewport. */
       .modal { width: 100%; max-width: min(420px, calc(100vw - 28px)); padding: 24px; }
