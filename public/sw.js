@@ -1,5 +1,5 @@
 // Minimal service worker: enables PWA install and offline app-shell fallback.
-const CACHE = 'jr-portfolio-v1'
+const CACHE = 'jr-portfolio-v2'
 const SHELL = ['/', '/index.html', '/favicon.svg', '/manifest.webmanifest']
 
 self.addEventListener('install', (event) => {

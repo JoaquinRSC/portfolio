@@ -142,6 +142,20 @@ a { text-decoration: none; color: inherit; }
   &.in-view { opacity: 1; transform: translateY(0); }
 }
 
+// ── Standalone (installed PWA) ─────────────────────────────────────────────────
+// Hide the scrollbar for a cleaner look once installed, keeping scroll behavior.
+@media all and (display-mode: standalone) {
+  html {
+    scrollbar-width: none;          // Firefox
+    -ms-overflow-style: none;       // legacy Edge/IE
+  }
+  html::-webkit-scrollbar {         // Chromium/WebKit
+    width: 0;
+    height: 0;
+    display: none;
+  }
+}
+
 // ── Responsive ───────────────────────────────────────────────────────────────
 @media (max-width: 768px) {
   .section { padding: 64px 0; }
