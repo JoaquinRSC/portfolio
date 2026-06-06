@@ -33,6 +33,17 @@ export const projects = [
     accent: '#41b883',
   },
   {
+    name: 'AdoptMe Trader',
+    description:
+      'Quasar v2 SSR app (Vue 3 + Pinia + TypeScript) to value pets and judge trade fairness in Roblox Adopt Me. Cross-checks two community value sources (AMVGG and Elvebredd), derives per-form values (Fly/Ride/Neon/Mega) from base values via the AMVGG multiplier formula, and scores demand-adjusted fairness with balancing suggestions. Also browses the live AMVGG market for fair offers. All external sites are fetched server-side and cached in memory; deployed on Fly.io via a multi-stage Docker build.',
+    language: 'Vue',
+    live: true,
+    url: 'https://amtrader.fly.dev/', // live site, public repo — open externally
+    screenshots: ['/projects/adoptme-trader-1.png'],
+    gradient: 'linear-gradient(135deg, #1a0a14 0%, #2d0d22 50%, #ec489918 100%)',
+    accent: '#ec4899',
+  },
+  {
     name: 'CSFloat Buy Orders',
     description:
       'Node.js web app that automates CS2 buy orders on CSFloat using live Buff163 prices (via SkinsTrack). Scans a skin pool, compares against CSFloat top buy orders, and places orders that pass a ratio filter, plus a background scanner that flags listings cheap enough to flip. Handles per-skin float ranges, pause/resume, and Cloudflare rate-limit backoff.',
