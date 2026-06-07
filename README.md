@@ -9,10 +9,13 @@ that run on sample data — no backend and no real accounts.
 ## Highlights
 
 - **Single-page site** — hero, projects, stack and education sections.
-- **Embedded project demos** — each project card opens the real app in-page (in
-  an iframe), running on fake data so visitors can actually try it:
+- **Embedded project demos** — most project cards open the app in-page (in an
+  iframe), running on bundled sample data so there are no real accounts and no
+  backend involved:
   - **CS2 Skin Tracker** — a Vue 3 + Quasar PWA (inventory + analytics) built
     with a `DEMO_MODE` flag that loads sample data and skips every API call.
+  - **PokéAccounts** — a read-only snapshot of the marketplace dashboard
+    (Vue 3 + Quasar) running on bundled sample data.
   - **CSFloat Buy Orders** — the full automation dashboard, with a mock layer
     that intercepts `fetch`/`EventSource` to simulate the live scan and
     opportunities flow.
