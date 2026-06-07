@@ -126,7 +126,6 @@
           infinite
           swipeable
           control-color="primary"
-          height="68vh"
           class="lightbox-carousel"
         >
           <q-carousel-slide
@@ -470,7 +469,15 @@ function onPreviewClick(project) {
 
 .lightbox-close { color: var(--muted2); }
 
-.lightbox-carousel { background: #000; }
+/* Match the carousel to the 16:9 screenshots so they fill it with no black
+   bars (capped on short viewports). */
+.lightbox-carousel {
+  background: #000;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: 82vh;
+}
 
 .lightbox-slide {
   display: flex;
