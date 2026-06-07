@@ -19,6 +19,10 @@ that run on sample data — no backend and no real accounts.
   - **CSFloat Buy Orders** — the full automation dashboard, with a mock layer
     that intercepts `fetch`/`EventSource` to simulate the live scan and
     opportunities flow.
+- **Other projects** — cards without an embedded demo link out or show
+  sanitized screenshots instead: **AdoptMe Trader** (a live Quasar SSR app with
+  a public repo) opens externally, and works-in-progress like **MP Tracker** are
+  shown via screenshots.
 - **Details** — Open Graph / Twitter link previews, an SVG favicon, scroll
   reveals, a typewriter hero and a responsive layout.
 
