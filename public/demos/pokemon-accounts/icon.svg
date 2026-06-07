@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="#0d0d0f"/>
+
+  <!-- Pokéball top half (yellow) -->
+  <path d="M 256 96 A 160 160 0 0 1 416 256 L 296 256 A 40 40 0 0 0 216 256 L 96 256 A 160 160 0 0 1 256 96 Z" fill="#ffd000"/>
+
+  <!-- Pokéball bottom half (surface) -->
+  <path d="M 256 416 A 160 160 0 0 1 96 256 L 216 256 A 40 40 0 0 0 296 256 L 416 256 A 160 160 0 0 1 256 416 Z" fill="#1c1c1f"/>
+
+  <!-- Dividing line -->
+  <rect x="88" y="246" width="336" height="20" rx="10" fill="#ffd000"/>
+
+  <!-- Center button outer -->
+  <circle cx="256" cy="256" r="44" fill="#ffd000"/>
+
+  <!-- Center button inner -->
+  <circle cx="256" cy="256" r="28" fill="#0d0d0f"/>
+
+  <!-- Center button shine -->
+  <circle cx="248" cy="248" r="8" fill="#ffd000" opacity="0.5"/>
+</svg>

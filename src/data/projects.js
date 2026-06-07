@@ -44,6 +44,17 @@ export const projects = [
     accent: '#ec4899',
   },
   {
+    name: 'PokéAccounts',
+    description:
+      'Full-stack dashboard (Vue 3 + Quasar frontend, Node.js + Express + SQLite backend) to manage and list a Pokémon GO account inventory on the Eldorado marketplace. Uses the Claude Vision API to read profile screenshots and extract structured stats (level, stardust, shinies, 100% IVs, team) plus a suggested price from comparable listings, and Sharp to auto-blur trainer names on upload for privacy. Handles bulk publish, market-based auto-repricing, pause/resume, and order/sales sync, with a sales analytics view. PWA-ready and responsive.',
+    language: 'Vue',
+    private: true,
+    demo: '/demos/pokemon-accounts/', // read-only UI snapshot with sample data, embedded in-page
+    screenshots: ['/projects/pokemon-accounts-1.png'],
+    gradient: 'linear-gradient(135deg, #1a1500 0%, #2a2200 50%, #facc1518 100%)',
+    accent: '#facc15',
+  },
+  {
     name: 'CSFloat Buy Orders',
     description:
       'Node.js web app that automates CS2 buy orders on CSFloat using live Buff163 prices (via SkinsTrack). Scans a skin pool, compares against CSFloat top buy orders, and places orders that pass a ratio filter, plus a background scanner that flags listings cheap enough to flip. Handles per-skin float ranges, pause/resume, and Cloudflare rate-limit backoff.',
