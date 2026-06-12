@@ -35,6 +35,18 @@ body.body--dark {
 
 a { text-decoration: none; color: inherit; }
 
+// ── Tap & selection (mobile) ───────────────────────────────────────────────────
+// App-like feel: tapping or scrolling over the UI never selects text.
+// Real prose stays selectable so visitors can still copy a description.
+.portfolio {
+  -webkit-user-select: none;
+  user-select: none;
+}
+p, .selectable {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 // ── Layout ───────────────────────────────────────────────────────────────────
 .portfolio {
   min-height: 100vh;
