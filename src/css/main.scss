@@ -36,13 +36,14 @@ body.body--dark {
 a { text-decoration: none; color: inherit; }
 
 // ── Tap & selection (mobile) ───────────────────────────────────────────────────
-// App-like feel: tapping or scrolling over the UI never selects text.
-// Real prose stays selectable so visitors can still copy a description.
-.portfolio {
+// App-like feel: tapping or scrolling never selects text or triggers the
+// iOS long-press callout. Opt back in per-element with `.selectable`.
+body {
   -webkit-user-select: none;
   user-select: none;
+  -webkit-touch-callout: none;
 }
-p, .selectable {
+.selectable {
   -webkit-user-select: text;
   user-select: text;
 }
