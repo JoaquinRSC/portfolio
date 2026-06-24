@@ -21,7 +21,7 @@
       </p>
       <div class="hero-stats">
         <div class="stat-item">
-          <span class="stat-num">3+</span>
+          <span class="stat-num">5+</span>
           <span class="stat-label">Projects</span>
         </div>
         <span class="stat-sep" aria-hidden="true">/</span>
