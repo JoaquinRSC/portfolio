@@ -37,6 +37,14 @@
       </div>
       <div class="hero-actions">
         <a href="#projects" class="btn-primary">View projects</a>
+        <a href="/joaquin-rossi-cv.pdf" download="Joaquin-Rossi-CV.pdf" class="btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <path d="M7 10l5 5 5-5" />
+            <path d="M12 15V3" />
+          </svg>
+          Download CV
+        </a>
         <a href="mailto:joaquinrossi55@icloud.com" class="btn-ghost">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="4" width="20" height="16" rx="2" />
