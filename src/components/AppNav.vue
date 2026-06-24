@@ -1,6 +1,19 @@
 <template>
   <header class="nav">
     <div class="container nav-inner">
+      <button
+        type="button"
+        class="nav-burger"
+        :aria-expanded="menuOpen"
+        aria-label="Open menu"
+        aria-controls="mobile-menu"
+        @click="menuOpen = true"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </button>
+
       <nav class="nav-links">
         <a href="#projects">projects</a>
         <a href="#stack">stack</a>
@@ -33,8 +46,69 @@
         </a>
       </div>
     </div>
+
+    <Teleport to="body">
+      <Transition name="menu">
+        <div v-if="menuOpen" class="mobile-menu-root">
+          <div class="mobile-backdrop" @click="menuOpen = false" />
+          <nav id="mobile-menu" class="mobile-panel" aria-label="Mobile navigation">
+            <div class="mobile-head">
+              <span class="mobile-brand">// menu</span>
+              <button type="button" class="mobile-close" aria-label="Close menu" @click="menuOpen = false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <a href="#projects" class="mobile-link" @click="menuOpen = false">projects</a>
+            <a href="#stack" class="mobile-link" @click="menuOpen = false">stack</a>
+            <a href="#education" class="mobile-link" @click="menuOpen = false">education</a>
+
+            <div class="mobile-sep" />
+
+            <a href="mailto:joaquinrossi55@icloud.com" class="mobile-action" @click="menuOpen = false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m2 7 10 6 10-6" />
+              </svg>
+              Email me
+            </a>
+            <a href="/joaquin-rossi-cv.pdf" download="Joaquin-Rossi-CV.pdf" class="mobile-action" @click="menuOpen = false">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <path d="M7 10l5 5 5-5" />
+                <path d="M12 15V3" />
+              </svg>
+              Download CV
+            </a>
+          </nav>
+        </div>
+      </Transition>
+    </Teleport>
   </header>
 </template>
+
+<script setup>
+import { ref, watch, onUnmounted } from 'vue'
+
+const menuOpen = ref(false)
+
+function onKeydown(e) {
+  if (e.key === 'Escape') menuOpen.value = false
+}
+
+watch(menuOpen, (open) => {
+  document.body.style.overflow = open ? 'hidden' : ''
+  if (open) window.addEventListener('keydown', onKeydown)
+  else window.removeEventListener('keydown', onKeydown)
+})
+
+onUnmounted(() => {
+  document.body.style.overflow = ''
+  window.removeEventListener('keydown', onKeydown)
+})
+</script>
 
 <style scoped lang="scss">
 .nav {
@@ -51,6 +125,23 @@
   align-items: center;
   justify-content: space-between;
   height: 60px;
+}
+
+.nav-burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-left: -8px;
+  background: none;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover { background: rgba(34,197,94,0.08); border-color: var(--accent); }
 }
 
 .nav-links {
@@ -92,7 +183,108 @@
   &:hover { background: rgba(34,197,94,0.08); border-color: var(--accent); }
 }
 
+/* ── Mobile slide-in menu ─────────────────────────────────────────── */
+.mobile-menu-root {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+
+.mobile-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6,11,6,0.7);
+  backdrop-filter: blur(2px);
+}
+
+.mobile-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(80vw, 280px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  background: var(--surface);
+  border-left: 1px solid var(--border2);
+  box-shadow: -20px 0 50px rgba(0,0,0,0.5);
+}
+
+.mobile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.mobile-brand {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  opacity: 0.75;
+}
+
+.mobile-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: none;
+  border: none;
+  color: var(--muted2);
+  cursor: pointer;
+  transition: color 0.15s;
+
+  &:hover { color: var(--accent); }
+}
+
+.mobile-link {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--text);
+  padding: 12px 10px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+
+  &:hover, &:active { color: var(--accent); background: rgba(34,197,94,0.06); }
+}
+
+.mobile-sep {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 4px;
+}
+
+.mobile-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted2);
+  padding: 11px 10px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+
+  &:hover, &:active { color: var(--accent); background: rgba(34,197,94,0.06); }
+}
+
+/* Transition: backdrop fades, panel slides in from the right. */
+.menu-enter-active,
+.menu-leave-active { transition: opacity 0.25s ease; }
+.menu-enter-active .mobile-panel,
+.menu-leave-active .mobile-panel { transition: transform 0.25s ease; }
+.menu-enter-from,
+.menu-leave-to { opacity: 0; }
+.menu-enter-from .mobile-panel,
+.menu-leave-to .mobile-panel { transform: translateX(100%); }
+
 @media (max-width: 600px) {
+  .nav-burger { display: inline-flex; }
   .nav-links { display: none; }
   .nav-gh span { display: none; }
 }
