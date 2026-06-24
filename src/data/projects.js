@@ -65,4 +65,15 @@ export const projects = [
     gradient: 'linear-gradient(135deg, #1a1400 0%, #2d2200 50%, #f59e0b18 100%)',
     accent: '#f59e0b',
   },
+  {
+    name: 'Cuidauto',
+    description:
+      'Vue 3 + Quasar PWA (Supabase backend) to track car maintenance and Uruguayan legal deadlines — ITV, SUCIVE/patente, SOA and libreta. Sends Web Push reminders before each obligation expires (daily pg_cron job triggering an Edge Function), with vehicle CRUD and maintenance history, expense charts with date-range filters, a public read-only vehicle page via QR, and a freemium paywall with a car limit and pro-feature gating.',
+    language: 'Vue',
+    live: true,
+    url: 'https://cuidauto.vercel.app/', // live B2C product (lands on login) — open externally
+    screenshots: [], // photos coming — drop sanitized shots into public/projects/ e.g. ['/projects/cuidauto-1.png']
+    gradient: 'linear-gradient(135deg, #1a0f00 0%, #2a1800 50%, #f9731618 100%)',
+    accent: '#f97316',
+  },
 ]
