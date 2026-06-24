@@ -1,0 +1,86 @@
+[
+  {
+    "date": "2025-07-01",
+    "holdings_value": 64.2,
+    "invested": 78,
+    "unrealized_pnl": -13.8,
+    "realized_pnl": 120.4
+  },
+  {
+    "date": "2025-08-01",
+    "holdings_value": 71.85,
+    "invested": 85.5,
+    "unrealized_pnl": -13.65,
+    "realized_pnl": 168.9
+  },
+  {
+    "date": "2025-09-01",
+    "holdings_value": 69.4,
+    "invested": 84,
+    "unrealized_pnl": -14.6,
+    "realized_pnl": 205.3
+  },
+  {
+    "date": "2025-10-01",
+    "holdings_value": 88.1,
+    "invested": 99.2,
+    "unrealized_pnl": -11.1,
+    "realized_pnl": 268.75
+  },
+  {
+    "date": "2025-11-01",
+    "holdings_value": 102.55,
+    "invested": 110.4,
+    "unrealized_pnl": -7.85,
+    "realized_pnl": 331.1
+  },
+  {
+    "date": "2025-12-01",
+    "holdings_value": 96.3,
+    "invested": 108.9,
+    "unrealized_pnl": -12.6,
+    "realized_pnl": 389.6
+  },
+  {
+    "date": "2026-01-01",
+    "holdings_value": 118.7,
+    "invested": 126.3,
+    "unrealized_pnl": -7.6,
+    "realized_pnl": 452.2
+  },
+  {
+    "date": "2026-02-01",
+    "holdings_value": 131.2,
+    "invested": 138,
+    "unrealized_pnl": -6.8,
+    "realized_pnl": 510.85
+  },
+  {
+    "date": "2026-03-01",
+    "holdings_value": 127.85,
+    "invested": 135.5,
+    "unrealized_pnl": -7.65,
+    "realized_pnl": 571.4
+  },
+  {
+    "date": "2026-04-01",
+    "holdings_value": 142.6,
+    "invested": 150.1,
+    "unrealized_pnl": -7.5,
+    "realized_pnl": 632.1
+  },
+  {
+    "date": "2026-05-01",
+    "holdings_value": 150.95,
+    "invested": 165.4,
+    "unrealized_pnl": -14.45,
+    "realized_pnl": 690.55
+  },
+  {
+    "date": "2026-06-01",
+    "holdings_value": 156.98,
+    "invested": 171.72,
+    "unrealized_pnl": -14.74,
+    "realized_pnl": 734.79
+  }
+]

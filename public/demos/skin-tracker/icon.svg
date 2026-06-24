@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="st-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121A2E"/>
+      <stop offset="1" stop-color="#070A12"/>
+    </linearGradient>
+    <linearGradient id="st-line" x1="0.1" y1="1" x2="0.9" y2="0">
+      <stop offset="0" stop-color="#0FAE63"/>
+      <stop offset="1" stop-color="#22E58A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="512" height="512" rx="116" fill="url(#st-bg)"/>
+  <rect x="5" y="5" width="502" height="502" rx="111" fill="none" stroke="#2A3654" stroke-opacity="0.55" stroke-width="2"/>
+
+  <!-- Rising value line -->
+  <polyline points="120,372 192,312 240,334 300,212"
+    fill="none" stroke="url(#st-line)" stroke-width="28"
+    stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Locked-target halo + dot -->
+  <circle cx="300" cy="212" r="30" fill="#10D078" fill-opacity="0.18"/>
+  <circle cx="300" cy="212" r="15" fill="#22E58A"/>
+
+  <!-- Crosshair ticks -->
+  <g fill="#EAF1FB">
+    <rect x="293" y="150" width="14" height="34" rx="7"/>
+    <rect x="293" y="240" width="14" height="34" rx="7"/>
+    <rect x="238" y="205" width="34" height="14" rx="7"/>
+    <rect x="328" y="205" width="34" height="14" rx="7"/>
+  </g>
+</svg>
