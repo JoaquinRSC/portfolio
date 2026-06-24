@@ -46,7 +46,7 @@ export const projects = [
   {
     name: 'PokéAccounts',
     description:
-      'Full-stack dashboard (Vue 3 + Quasar frontend, Node.js + Express + SQLite backend) to manage and list a Pokémon GO account inventory on the Eldorado marketplace. Uses the Claude Vision API to read profile screenshots and extract structured stats (level, stardust, shinies, 100% IVs, team) plus a suggested price from comparable listings, and Sharp to auto-blur trainer names on upload for privacy. Handles bulk publish, market-based auto-repricing, pause/resume, and order/sales sync, with a sales analytics view. PWA-ready and responsive.',
+      'Full-stack dashboard (Vue 3 + Quasar frontend, Node.js + Express + SQLite backend) to manage and list a Pokémon GO account inventory on the Eldorado marketplace. Uses Claude (Haiku) vision to read profile screenshots and extract structured stats (level, stardust, shinies, 100% IVs, team) plus a suggested price from comparable listings, and Sharp to auto-blur trainer names on upload for privacy. Handles bulk publish, market-based auto-repricing, pause/resume, and order/sales sync, with a sales analytics view. Adds password login (scrypt + signed session), a Web Push alert before the Eldorado token expires, a browser extension to keep that token synced, and u7buy cross-posting. PWA-ready and responsive.',
     language: 'Vue',
     private: true,
     demo: '/demos/pokemon-accounts/', // read-only UI snapshot with sample data, embedded in-page
