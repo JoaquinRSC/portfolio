@@ -55,6 +55,7 @@ export const messages = {
       built: 'Built with Vue & Quasar',
       location: 'Montevideo, Uruguay',
     },
+    toast: { emailCopied: 'Email copied' },
   },
 
   es: {
@@ -110,5 +111,6 @@ export const messages = {
       built: 'Hecho con Vue y Quasar',
       location: 'Montevideo, Uruguay',
     },
+    toast: { emailCopied: 'Email copiado' },
   },
 }

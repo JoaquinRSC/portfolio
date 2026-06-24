@@ -3,7 +3,7 @@
     <div class="container footer-inner">
       <span class="footer-copy">{{ m.footer.built }}</span>
       <div class="footer-links">
-        <a :href="mailto" class="footer-link">
+        <a :href="mailto" class="footer-link" @click="copyEmail">
           {{ contact.email }}
         </a>
         <a :href="contact.github" target="_blank" rel="noopener" class="footer-link">
@@ -21,8 +21,10 @@
 <script setup>
 import { contact, mailto } from '../data/contact.js'
 import { useI18n } from '../composables/useI18n.js'
+import { useEmail } from '../composables/useEmail.js'
 
 const { m } = useI18n()
+const { copyEmail } = useEmail()
 </script>
 
 <style scoped lang="scss">

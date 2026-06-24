@@ -10,6 +10,7 @@
     <AppStack />
     <AppEducation />
     <AppFooter />
+    <AppToast />
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import AppProjects  from './components/AppProjects.vue'
 import AppStack     from './components/AppStack.vue'
 import AppEducation from './components/AppEducation.vue'
 import AppFooter    from './components/AppFooter.vue'
+import AppToast     from './components/AppToast.vue'
 import { useScrollReveal } from './composables/useScrollReveal.js'
 
 useScrollReveal()

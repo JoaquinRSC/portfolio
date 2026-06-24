@@ -41,7 +41,7 @@
           </svg>
           {{ m.hero.actions.cv }}
         </a>
-        <a :href="mailto" class="btn-ghost">
+        <a :href="mailto" class="btn-ghost" @click="copyEmail">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="4" width="20" height="16" rx="2" />
             <path d="m2 7 10 6 10-6" />
@@ -61,8 +61,10 @@ import { computed } from 'vue'
 import { useTypewriter } from '../composables/useTypewriter.js'
 import { contact, mailto } from '../data/contact.js'
 import { useI18n } from '../composables/useI18n.js'
+import { useEmail } from '../composables/useEmail.js'
 
 const { m } = useI18n()
+const { copyEmail } = useEmail()
 const roles = computed(() => m.value.hero.roles)
 const { displayText } = useTypewriter(roles)
 </script>
