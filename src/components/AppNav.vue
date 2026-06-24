@@ -15,6 +15,7 @@
       </button>
 
       <nav class="nav-links">
+        <a href="#about">about</a>
         <a href="#projects">projects</a>
         <a href="#stack">stack</a>
         <a href="#education">education</a>
@@ -61,6 +62,7 @@
               </button>
             </div>
 
+            <a href="#about" class="mobile-link" @click="menuOpen = false">about</a>
             <a href="#projects" class="mobile-link" @click="menuOpen = false">projects</a>
             <a href="#stack" class="mobile-link" @click="menuOpen = false">stack</a>
             <a href="#education" class="mobile-link" @click="menuOpen = false">education</a>

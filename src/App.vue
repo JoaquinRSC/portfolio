@@ -5,6 +5,7 @@
 
     <AppNav />
     <AppHero />
+    <AppAbout />
     <AppProjects />
     <AppStack />
     <AppEducation />
@@ -15,6 +16,7 @@
 <script setup>
 import AppNav       from './components/AppNav.vue'
 import AppHero      from './components/AppHero.vue'
+import AppAbout     from './components/AppAbout.vue'
 import AppProjects  from './components/AppProjects.vue'
 import AppStack     from './components/AppStack.vue'
 import AppEducation from './components/AppEducation.vue'

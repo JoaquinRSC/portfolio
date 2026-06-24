@@ -2,7 +2,7 @@
   <section id="projects" class="section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">// 01 &mdash; projects</div>
+        <div class="section-label">// 02 &mdash; projects</div>
         <h2 class="section-title">Things I've built</h2>
         <p class="section-sub">
           Live demos where possible, and sanitized previews of private work
