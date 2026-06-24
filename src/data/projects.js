@@ -65,15 +65,4 @@ export const projects = [
     gradient: 'linear-gradient(135deg, #1a1400 0%, #2d2200 50%, #f59e0b18 100%)',
     accent: '#f59e0b',
   },
-  {
-    name: 'MP Tracker',
-    description:
-      'Puppeteer scraper that tracks online car listings in Montevideo, monitoring price drops and new listings over time. Early-stage work in progress.',
-    language: 'JavaScript',
-    private: true,
-    wip: true,
-    screenshots: [], // e.g. ['/projects/mp-tracker-1.png']
-    gradient: 'linear-gradient(135deg, #001a14 0%, #00261d 50%, #10b98118 100%)',
-    accent: '#10b981',
-  },
 ]
