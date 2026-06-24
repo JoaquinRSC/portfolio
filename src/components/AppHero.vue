@@ -37,7 +37,7 @@
       </div>
       <div class="hero-actions">
         <a href="#projects" class="btn-primary">View projects</a>
-        <a href="/joaquin-rossi-cv.pdf" download="Joaquin-Rossi-CV.pdf" class="btn-ghost">
+        <a :href="contact.cvPath" :download="contact.cvFilename" class="btn-ghost">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
             <path d="M7 10l5 5 5-5" />
@@ -45,14 +45,14 @@
           </svg>
           Download CV
         </a>
-        <a href="mailto:joaquinrossi55@icloud.com" class="btn-ghost">
+        <a :href="mailto" class="btn-ghost">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="4" width="20" height="16" rx="2" />
             <path d="m2 7 10 6 10-6" />
           </svg>
           Email me
         </a>
-        <a href="https://github.com/JoaquinRSC" target="_blank" rel="noopener" class="btn-ghost">
+        <a :href="contact.github" target="_blank" rel="noopener" class="btn-ghost">
           GitHub ↗
         </a>
       </div>
@@ -62,6 +62,7 @@
 
 <script setup>
 import { useTypewriter } from '../composables/useTypewriter.js'
+import { contact, mailto } from '../data/contact.js'
 
 const ROLES = ['Full Stack Developer.', 'Web Developer.', 'Backend Developer.', 'Problem Solver.']
 const { displayText } = useTypewriter(ROLES)

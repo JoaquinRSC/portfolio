@@ -2,7 +2,7 @@
   <section id="about" class="section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">// 01 &mdash; about</div>
+        <div class="section-label">about</div>
         <h2 class="section-title">A bit about me</h2>
       </div>
 
@@ -78,8 +78,6 @@
   color: var(--muted2);
 
   & + p { margin-top: 18px; }
-
-  strong { color: var(--text); font-weight: 700; }
 }
 
 /* Quick facts rendered as a JS object — the subject's own vernacular. */

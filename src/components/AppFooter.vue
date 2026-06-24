@@ -3,18 +3,13 @@
     <div class="container footer-inner">
       <span class="footer-copy">Built with Vue &amp; Quasar</span>
       <div class="footer-links">
-        <a href="mailto:joaquinrossi55@icloud.com" class="footer-link">
-          joaquinrossi55@icloud.com
+        <a :href="mailto" class="footer-link">
+          {{ contact.email }}
         </a>
-        <a href="https://github.com/JoaquinRSC" target="_blank" rel="noopener" class="footer-link">
+        <a :href="contact.github" target="_blank" rel="noopener" class="footer-link">
           github.com/JoaquinRSC
         </a>
-        <a
-          href="https://www.linkedin.com/in/joaquin-rossi-dev"
-          target="_blank"
-          rel="noopener"
-          class="footer-link"
-        >
+        <a :href="contact.linkedin" target="_blank" rel="noopener" class="footer-link">
           linkedin.com/in/joaquin-rossi-dev
         </a>
       </div>
@@ -22,6 +17,10 @@
     </div>
   </footer>
 </template>
+
+<script setup>
+import { contact, mailto } from '../data/contact.js'
+</script>
 
 <style scoped lang="scss">
 .footer {

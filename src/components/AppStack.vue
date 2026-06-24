@@ -2,7 +2,7 @@
   <section id="stack" class="section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">// 03 &mdash; stack</div>
+        <div class="section-label">stack</div>
         <h2 class="section-title">Technologies I use</h2>
       </div>
 

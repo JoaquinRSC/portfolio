@@ -15,14 +15,11 @@
       </button>
 
       <nav class="nav-links">
-        <a href="#about">about</a>
-        <a href="#projects">projects</a>
-        <a href="#stack">stack</a>
-        <a href="#education">education</a>
+        <a v-for="s in sections" :key="s" :href="`#${s}`">{{ s }}</a>
       </nav>
       <div class="nav-actions">
         <a
-          href="https://www.linkedin.com/in/joaquin-rossi-dev"
+          :href="contact.linkedin"
           target="_blank"
           rel="noopener"
           class="nav-gh"
@@ -34,7 +31,7 @@
           <span>LinkedIn</span>
         </a>
         <a
-          href="https://github.com/JoaquinRSC"
+          :href="contact.github"
           target="_blank"
           rel="noopener"
           class="nav-gh"
@@ -62,21 +59,24 @@
               </button>
             </div>
 
-            <a href="#about" class="mobile-link" @click="menuOpen = false">about</a>
-            <a href="#projects" class="mobile-link" @click="menuOpen = false">projects</a>
-            <a href="#stack" class="mobile-link" @click="menuOpen = false">stack</a>
-            <a href="#education" class="mobile-link" @click="menuOpen = false">education</a>
+            <a
+              v-for="s in sections"
+              :key="s"
+              :href="`#${s}`"
+              class="mobile-link"
+              @click="menuOpen = false"
+            >{{ s }}</a>
 
             <div class="mobile-sep" />
 
-            <a href="mailto:joaquinrossi55@icloud.com" class="mobile-action" @click="menuOpen = false">
+            <a :href="mailto" class="mobile-action" @click="menuOpen = false">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="2" y="4" width="20" height="16" rx="2" />
                 <path d="m2 7 10 6 10-6" />
               </svg>
               Email me
             </a>
-            <a href="/joaquin-rossi-cv.pdf" download="Joaquin-Rossi-CV.pdf" class="mobile-action" @click="menuOpen = false">
+            <a :href="contact.cvPath" :download="contact.cvFilename" class="mobile-action" @click="menuOpen = false">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <path d="M7 10l5 5 5-5" />
@@ -93,6 +93,11 @@
 
 <script setup>
 import { ref, watch, onUnmounted } from 'vue'
+import { contact, mailto } from '../data/contact.js'
+
+// Section anchors, shared by the desktop bar and the mobile panel so the two
+// stay in sync. The id doubles as the visible label (lowercase by design).
+const sections = ['about', 'projects', 'stack', 'education']
 
 const menuOpen = ref(false)
 

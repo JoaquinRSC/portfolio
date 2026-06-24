@@ -53,6 +53,7 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  counter-reset: section;
 }
 
 .bg-grid {
@@ -89,14 +90,22 @@ body {
   &:last-of-type { border-bottom: none; }
 }
 
-.section-header { margin-bottom: 44px; }
+.section-header {
+  margin-bottom: 44px;
+  counter-increment: section;
+}
 
+// The eyebrow number is derived from section order, so reordering or inserting
+// a section never needs a manual renumber. Each section sets only its name as
+// the label text; the `// 0N — ` prefix is generated here.
 .section-label {
   font-family: var(--mono);
   font-size: 12px;
   color: var(--accent);
   margin-bottom: 10px;
   opacity: 0.8;
+
+  &::before { content: '// ' counter(section, decimal-leading-zero) ' — '; }
 }
 
 .section-title {

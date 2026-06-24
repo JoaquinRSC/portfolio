@@ -2,7 +2,7 @@
   <section id="education" class="section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">// 04 &mdash; education</div>
+        <div class="section-label">education</div>
         <h2 class="section-title">Academic background</h2>
       </div>
 
