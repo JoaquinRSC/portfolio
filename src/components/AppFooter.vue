@@ -3,6 +3,9 @@
     <div class="container footer-inner">
       <span class="footer-copy">Built with Vue &amp; Quasar</span>
       <div class="footer-links">
+        <a href="mailto:joaquinrossi55@icloud.com" class="footer-link">
+          joaquinrossi55@icloud.com
+        </a>
         <a href="https://github.com/JoaquinRSC" target="_blank" rel="noopener" class="footer-link">
           github.com/JoaquinRSC
         </a>
