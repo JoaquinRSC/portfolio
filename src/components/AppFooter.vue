@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container footer-inner">
-      <span class="footer-copy">Built with Vue &amp; Quasar</span>
+      <span class="footer-copy">{{ m.footer.built }}</span>
       <div class="footer-links">
         <a :href="mailto" class="footer-link">
           {{ contact.email }}
@@ -13,13 +13,16 @@
           linkedin.com/in/joaquin-rossi-dev
         </a>
       </div>
-      <span class="footer-loc">Montevideo, Uruguay</span>
+      <span class="footer-loc">{{ m.footer.location }}</span>
     </div>
   </footer>
 </template>
 
 <script setup>
 import { contact, mailto } from '../data/contact.js'
+import { useI18n } from '../composables/useI18n.js'
+
+const { m } = useI18n()
 </script>
 
 <style scoped lang="scss">

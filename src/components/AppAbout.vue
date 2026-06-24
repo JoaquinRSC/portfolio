@@ -2,26 +2,14 @@
   <section id="about" class="section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">about</div>
-        <h2 class="section-title">A bit about me</h2>
+        <div class="section-label">{{ m.about.label }}</div>
+        <h2 class="section-title">{{ m.about.title }}</h2>
       </div>
 
       <div class="about-grid reveal" style="--delay: 0.1s">
         <div class="about-prose">
-          <p>
-            I'm a self-taught developer wrapping up a Computer Science
-            technologist degree in Uruguay. Most of what I know came from
-            building things end to end &mdash; not following tutorials, but
-            shipping real apps that other people actually use, and that I keep
-            maintaining over time.
-          </p>
-          <p>
-            I work across the stack with Vue, Quasar and Node.js, and I'm
-            increasingly pulled toward the data and AI side of software &mdash;
-            a few of the projects here already lean on vision models and price
-            analytics. Now I'm after my first Junior&nbsp;/&nbsp;Trainee role to
-            keep building like this on a team.
-          </p>
+          <p>{{ m.about.p1 }}</p>
+          <p>{{ m.about.p2 }}</p>
         </div>
 
         <aside class="about-card" aria-label="Quick facts">
@@ -36,19 +24,19 @@
               <span class="kw">const</span> <span class="vr">joaquin</span> <span class="pn">=</span> <span class="pn">{</span>
             </div>
             <div class="line indent">
-              <span class="prop">based</span><span class="pn">:</span> <span class="str">'Montevideo, Uruguay'</span><span class="pn">,</span>
+              <span class="prop">based</span><span class="pn">:</span> <span class="str">'{{ m.about.facts.based }}'</span><span class="pn">,</span>
             </div>
             <div class="line indent">
-              <span class="prop">role</span><span class="pn">:</span> <span class="str">'Full-stack developer'</span><span class="pn">,</span>
+              <span class="prop">role</span><span class="pn">:</span> <span class="str">'{{ m.about.facts.role }}'</span><span class="pn">,</span>
             </div>
             <div class="line indent">
-              <span class="prop">studying</span><span class="pn">:</span> <span class="str">'CS Technologist · UTU'</span><span class="pn">,</span>
+              <span class="prop">studying</span><span class="pn">:</span> <span class="str">'{{ m.about.facts.studying }}'</span><span class="pn">,</span>
             </div>
             <div class="line indent">
-              <span class="prop">into</span><span class="pn">:</span> <span class="str">'Data &amp; AI'</span><span class="pn">,</span>
+              <span class="prop">into</span><span class="pn">:</span> <span class="str">'{{ m.about.facts.into }}'</span><span class="pn">,</span>
             </div>
             <div class="line indent">
-              <span class="prop">status</span><span class="pn">:</span> <span class="str on">'Open to Junior / Trainee'</span><span class="pn">,</span>
+              <span class="prop">status</span><span class="pn">:</span> <span class="str on">'{{ m.about.facts.status }}'</span><span class="pn">,</span>
             </div>
             <div class="line">
               <span class="pn">}</span>
@@ -60,7 +48,11 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { useI18n } from '../composables/useI18n.js'
+
+const { m } = useI18n()
+</script>
 
 <style scoped lang="scss">
 .about-grid {

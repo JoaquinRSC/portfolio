@@ -2,14 +2,14 @@
   <section id="stack" class="section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">stack</div>
-        <h2 class="section-title">Technologies I use</h2>
+        <div class="section-label">{{ m.stack.label }}</div>
+        <h2 class="section-title">{{ m.stack.title }}</h2>
       </div>
 
       <div class="stack-sections reveal" style="--delay: 0.1s">
         <div v-for="group in skills" :key="group.cat" class="stack-group">
           <div class="stack-cat-label">
-            <span>{{ group.cat }}</span>
+            <span>{{ m.stack.cats[group.cat] }}</span>
           </div>
           <div class="tech-grid">
             <a
@@ -19,7 +19,7 @@
               target="_blank"
               rel="noopener"
               class="tech-card"
-              :aria-label="`${tech.name} — open official site`"
+              :aria-label="m.stack.openSite(tech.name)"
             >
               <span class="tech-link-icon" aria-hidden="true">↗</span>
               <img
@@ -42,6 +42,9 @@
 
 <script setup>
 import { skills } from '../data/skills.js'
+import { useI18n } from '../composables/useI18n.js'
+
+const { m } = useI18n()
 </script>
 
 <style scoped lang="scss">

@@ -15,9 +15,20 @@
       </button>
 
       <nav class="nav-links">
-        <a v-for="s in sections" :key="s" :href="`#${s}`">{{ s }}</a>
+        <a v-for="s in sections" :key="s" :href="`#${s}`">{{ m.nav.links[s] }}</a>
       </nav>
       <div class="nav-actions">
+        <div class="lang-toggle" role="group" :aria-label="m.nav.langLabel">
+          <button
+            v-for="l in supported"
+            :key="l"
+            type="button"
+            class="lang-opt"
+            :class="{ active: lang === l }"
+            :aria-pressed="lang === l"
+            @click="setLang(l)"
+          >{{ l.toUpperCase() }}</button>
+        </div>
         <a
           :href="contact.linkedin"
           target="_blank"
@@ -59,13 +70,27 @@
               </button>
             </div>
 
+            <div class="lang-toggle mobile-lang" role="group" :aria-label="m.nav.langLabel">
+              <button
+                v-for="l in supported"
+                :key="l"
+                type="button"
+                class="lang-opt"
+                :class="{ active: lang === l }"
+                :aria-pressed="lang === l"
+                @click="setLang(l)"
+              >{{ l.toUpperCase() }}</button>
+            </div>
+
+            <div class="mobile-sep" />
+
             <a
               v-for="s in sections"
               :key="s"
               :href="`#${s}`"
               class="mobile-link"
               @click="menuOpen = false"
-            >{{ s }}</a>
+            >{{ m.nav.links[s] }}</a>
 
             <div class="mobile-sep" />
 
@@ -74,7 +99,7 @@
                 <rect x="2" y="4" width="20" height="16" rx="2" />
                 <path d="m2 7 10 6 10-6" />
               </svg>
-              Email me
+              {{ m.hero.actions.email }}
             </a>
             <a :href="contact.cvPath" :download="contact.cvFilename" class="mobile-action" @click="menuOpen = false">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -82,7 +107,7 @@
                 <path d="M7 10l5 5 5-5" />
                 <path d="M12 15V3" />
               </svg>
-              Download CV
+              {{ m.hero.actions.cv }}
             </a>
           </nav>
         </div>
@@ -94,9 +119,12 @@
 <script setup>
 import { ref, watch, onUnmounted } from 'vue'
 import { contact, mailto } from '../data/contact.js'
+import { useI18n } from '../composables/useI18n.js'
 
-// Section anchors, shared by the desktop bar and the mobile panel so the two
-// stay in sync. The id doubles as the visible label (lowercase by design).
+const { m, lang, setLang, supported } = useI18n()
+
+// Section anchors (the id is also the in-page hash); the visible label is
+// translated per language. Shared by the desktop bar and the mobile panel.
 const sections = ['about', 'projects', 'stack', 'education']
 
 const menuOpen = ref(false)
@@ -188,6 +216,38 @@ onUnmounted(() => {
   flex-shrink: 0;
 
   &:hover { background: rgba(34,197,94,0.08); border-color: var(--accent); }
+}
+
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.lang-opt {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted2);
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+
+  &:hover { color: var(--accent); }
+  &.active { color: var(--accent); background: rgba(34,197,94,0.10); }
+  & + & { border-left: 1px solid var(--border2); }
+}
+
+.mobile-lang {
+  align-self: flex-start;
+  margin-bottom: 4px;
+
+  .lang-opt { font-size: 12px; padding: 7px 14px; }
 }
 
 /* ── Mobile slide-in menu ─────────────────────────────────────────── */
@@ -294,5 +354,7 @@ onUnmounted(() => {
   .nav-burger { display: inline-flex; }
   .nav-links { display: none; }
   .nav-gh span { display: none; }
+  // The language switch moves into the mobile menu to keep the bar uncluttered.
+  .nav-actions > .lang-toggle { display: none; }
 }
 </style>

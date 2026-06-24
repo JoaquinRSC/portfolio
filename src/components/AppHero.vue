@@ -7,50 +7,46 @@
     <div class="hero-center-glow" aria-hidden="true" />
 
     <div class="container hero-content">
-      <div class="hero-pre">// hello, world</div>
+      <div class="hero-pre">{{ m.hero.pre }}</div>
       <h1 class="hero-name">
-        Hey, I'm <span class="hero-accent">Joaquín</span>.
+        {{ m.hero.greetPre }}<span class="hero-accent">Joaquín</span>{{ m.hero.greetPost }}
       </h1>
       <div class="hero-typewriter" aria-live="polite">
         <span class="typed-text">{{ displayText }}</span><span class="cursor" aria-hidden="true">_</span>
       </div>
-      <p class="hero-bio">
-        IT student and full-stack developer from Uruguay. Building real-world
-        web apps with Vue, Quasar &amp; Node.js since 2019 — currently looking
-        for my first Junior / Trainee role.
-      </p>
+      <p class="hero-bio">{{ m.hero.bio }}</p>
       <div class="hero-stats">
         <div class="stat-item">
           <span class="stat-num">5+</span>
-          <span class="stat-label">Projects</span>
+          <span class="stat-label">{{ m.hero.stats.projects }}</span>
         </div>
         <span class="stat-sep" aria-hidden="true">/</span>
         <div class="stat-item">
           <span class="stat-num">6+</span>
-          <span class="stat-label">Years coding</span>
+          <span class="stat-label">{{ m.hero.stats.years }}</span>
         </div>
         <span class="stat-sep" aria-hidden="true">/</span>
         <div class="stat-item">
           <span class="stat-num">5</span>
-          <span class="stat-label">Languages</span>
+          <span class="stat-label">{{ m.hero.stats.languages }}</span>
         </div>
       </div>
       <div class="hero-actions">
-        <a href="#projects" class="btn-primary">View projects</a>
+        <a href="#projects" class="btn-primary">{{ m.hero.actions.projects }}</a>
         <a :href="contact.cvPath" :download="contact.cvFilename" class="btn-ghost">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
             <path d="M7 10l5 5 5-5" />
             <path d="M12 15V3" />
           </svg>
-          Download CV
+          {{ m.hero.actions.cv }}
         </a>
         <a :href="mailto" class="btn-ghost">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="2" y="4" width="20" height="16" rx="2" />
             <path d="m2 7 10 6 10-6" />
           </svg>
-          Email me
+          {{ m.hero.actions.email }}
         </a>
         <a :href="contact.github" target="_blank" rel="noopener" class="btn-ghost">
           GitHub ↗
@@ -61,11 +57,14 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useTypewriter } from '../composables/useTypewriter.js'
 import { contact, mailto } from '../data/contact.js'
+import { useI18n } from '../composables/useI18n.js'
 
-const ROLES = ['Full Stack Developer.', 'Web Developer.', 'Backend Developer.', 'Problem Solver.']
-const { displayText } = useTypewriter(ROLES)
+const { m } = useI18n()
+const roles = computed(() => m.value.hero.roles)
+const { displayText } = useTypewriter(roles)
 </script>
 
 <style scoped lang="scss">

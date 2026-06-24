@@ -2,19 +2,19 @@
   <section id="education" class="section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">education</div>
-        <h2 class="section-title">Academic background</h2>
+        <div class="section-label">{{ m.education.label }}</div>
+        <h2 class="section-title">{{ m.education.title }}</h2>
       </div>
 
       <div class="edu-list reveal" style="--delay: 0.1s">
-        <div v-for="edu in education" :key="edu.title" class="edu-item">
+        <div v-for="edu in education" :key="edu.title.en" class="edu-item">
           <div class="edu-meta">
-            <span class="edu-status">{{ edu.status }}</span>
+            <span class="edu-status">{{ edu.status[lang] }}</span>
             <span class="edu-institution">{{ edu.institution }}</span>
           </div>
           <div class="edu-body">
-            <div class="edu-title">{{ edu.title }}</div>
-            <div class="edu-desc">{{ edu.description }}</div>
+            <div class="edu-title">{{ edu.title[lang] }}</div>
+            <div class="edu-desc">{{ edu.description[lang] }}</div>
           </div>
         </div>
       </div>
@@ -24,6 +24,9 @@
 
 <script setup>
 import { education } from '../data/education.js'
+import { useI18n } from '../composables/useI18n.js'
+
+const { m, lang } = useI18n()
 </script>
 
 <style scoped lang="scss">

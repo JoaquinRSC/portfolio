@@ -2,11 +2,9 @@
   <section id="projects" class="section">
     <div class="container">
       <div class="section-header reveal">
-        <div class="section-label">projects</div>
-        <h2 class="section-title">Things I've built</h2>
-        <p class="section-sub">
-          Live demos where possible, and sanitized previews of private work
-        </p>
+        <div class="section-label">{{ m.projects.label }}</div>
+        <h2 class="section-title">{{ m.projects.title }}</h2>
+        <p class="section-sub">{{ m.projects.sub }}</p>
       </div>
 
       <div class="projects-grid reveal" style="--delay: 0.1s">
@@ -32,11 +30,8 @@
                 loading="lazy"
               />
               <div class="preview-zoom">
-                <template v-if="project.demo">▶ Try it live</template>
-                <template v-else>
-                  ⤢ {{ project.screenshots.length }}
-                  screenshot{{ project.screenshots.length > 1 ? 's' : '' }}
-                </template>
+                <template v-if="project.demo">{{ m.projects.tryLive }}</template>
+                <template v-else>{{ m.projects.shots(project.screenshots.length) }}</template>
               </div>
             </template>
 
@@ -64,11 +59,11 @@
           <div class="project-body">
             <div class="project-header">
               <span class="project-name">{{ project.name }}</span>
-              <span v-if="project.live" class="badge badge-live">Live</span>
-              <span v-else-if="project.wip" class="badge badge-wip">In Progress</span>
-              <span v-if="project.private" class="badge badge-private">Private</span>
+              <span v-if="project.live" class="badge badge-live">{{ m.projects.badges.live }}</span>
+              <span v-else-if="project.wip" class="badge badge-wip">{{ m.projects.badges.wip }}</span>
+              <span v-if="project.private" class="badge badge-private">{{ m.projects.badges.private }}</span>
             </div>
-            <p class="project-desc">{{ project.description }}</p>
+            <p class="project-desc">{{ project.description[lang] }}</p>
             <div class="project-footer">
               <span v-if="project.language" class="lang-badge">
                 <span class="lang-dot" :style="{ background: langColor(project.language) }" />
@@ -80,7 +75,7 @@
                 class="action-hint as-button"
                 @click="openEmbed(project)"
               >
-                Try demo ▶
+                {{ m.projects.actions.demo }}
               </button>
               <a
                 v-else-if="project.url"
@@ -89,7 +84,7 @@
                 rel="noopener"
                 class="action-hint"
               >
-                Open ↗
+                {{ m.projects.actions.open }}
               </a>
               <button
                 v-else-if="project.screenshots?.length"
@@ -97,17 +92,17 @@
                 class="action-hint as-button"
                 @click="openLightbox(project)"
               >
-                Screenshots ⤢
+                {{ m.projects.actions.screenshots }}
               </button>
-              <span v-else class="action-hint muted">Code private</span>
+              <span v-else class="action-hint muted">{{ m.projects.actions.private }}</span>
             </div>
           </div>
         </article>
       </div>
 
       <div class="section-more">
-        <a href="https://github.com/JoaquinRSC" target="_blank" rel="noopener" class="more-link">
-          View GitHub profile →
+        <a :href="contact.github" target="_blank" rel="noopener" class="more-link">
+          {{ m.projects.more }}
         </a>
       </div>
     </div>
@@ -143,10 +138,10 @@
     <q-dialog v-model="embed.open" maximized @hide="embed.url = ''">
       <q-card class="embed-card">
         <div class="embed-head">
-          <span class="embed-title">{{ embed.title }} · live demo · sample data</span>
+          <span class="embed-title">{{ embed.title }} {{ m.projects.embedMeta }}</span>
           <div class="embed-actions">
             <a :href="embed.url" target="_blank" rel="noopener" class="embed-open">
-              Open in new tab ↗
+              {{ m.projects.openTab }}
             </a>
             <q-btn flat round dense icon="close" class="lightbox-close" @click="embed.open = false" />
           </div>
@@ -166,6 +161,10 @@
 <script setup>
 import { reactive } from 'vue'
 import { projects, langColor } from '../data/projects.js'
+import { contact } from '../data/contact.js'
+import { useI18n } from '../composables/useI18n.js'
+
+const { m, lang } = useI18n()
 
 const lightbox = reactive({ open: false, slide: 0, title: '', images: [] })
 const embed = reactive({ open: false, title: '', url: '' })
