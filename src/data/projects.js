@@ -20,7 +20,30 @@ export function langColor(lang) {
 // `url` (open externally).
 // Status flags: `live` (deployed), `private` (code not public, proven via
 // screenshots/demo), `wip` (still in development).
+// `portrait: true` marks phone-sized (portrait) screenshots so the card and
+// lightbox frame them as a device instead of cover-cropping a 16:9 strip.
 export const projects = [
+  {
+    name: 'Cuidauto',
+    description: {
+      en: 'Vue 3 + Quasar PWA (Supabase backend) to track car maintenance and Uruguayan legal deadlines — ITV, SUCIVE/patente, SOA and libreta. Sends Web Push reminders before each obligation expires (daily pg_cron job triggering an Edge Function), with vehicle CRUD and maintenance history, expense charts with date-range filters, a public read-only vehicle page via QR, and a freemium paywall with a car limit and pro-feature gating.',
+      es: 'PWA en Vue 3 + Quasar (backend Supabase) para llevar el mantenimiento del auto y los vencimientos legales uruguayos — ITV, SUCIVE/patente, SOA y libreta. Envía recordatorios Web Push antes de que venza cada obligación (un pg_cron diario que dispara una Edge Function), con CRUD de vehículos e historial de mantenimiento, gráficos de gastos con filtros por rango de fechas, una página pública de solo lectura del vehículo vía QR, y un paywall freemium con límite de autos y features pro.',
+    },
+    language: 'Vue',
+    live: true,
+    url: 'https://cuidauto.vercel.app/', // live B2C product (lands on login) — open externally
+    portrait: true, // mobile-first PWA: screenshots are phone-sized (portrait)
+    screenshots: [
+      '/projects/cuidauto-1.png', // garage + expense chart
+      '/projects/cuidauto-2.png', // vehicle detail + service history
+      '/projects/cuidauto-3.png', // legal deadlines (ITV / SOA / patente)
+      '/projects/cuidauto-4.png', // public QR share
+      '/projects/cuidauto-5.png', // freemium paywall
+      '/projects/cuidauto-6.png', // settings + premium
+    ],
+    gradient: 'linear-gradient(135deg, #1a0f00 0%, #2a1800 50%, #f9731618 100%)',
+    accent: '#f97316',
+  },
   {
     name: 'CS2 Skin Tracker',
     description: {
@@ -72,18 +95,5 @@ export const projects = [
     screenshots: ['/projects/csfloat-1.png'],
     gradient: 'linear-gradient(135deg, #1a1400 0%, #2d2200 50%, #f59e0b18 100%)',
     accent: '#f59e0b',
-  },
-  {
-    name: 'Cuidauto',
-    description: {
-      en: 'Vue 3 + Quasar PWA (Supabase backend) to track car maintenance and Uruguayan legal deadlines — ITV, SUCIVE/patente, SOA and libreta. Sends Web Push reminders before each obligation expires (daily pg_cron job triggering an Edge Function), with vehicle CRUD and maintenance history, expense charts with date-range filters, a public read-only vehicle page via QR, and a freemium paywall with a car limit and pro-feature gating.',
-      es: 'PWA en Vue 3 + Quasar (backend Supabase) para llevar el mantenimiento del auto y los vencimientos legales uruguayos — ITV, SUCIVE/patente, SOA y libreta. Envía recordatorios Web Push antes de que venza cada obligación (un pg_cron diario que dispara una Edge Function), con CRUD de vehículos e historial de mantenimiento, gráficos de gastos con filtros por rango de fechas, una página pública de solo lectura del vehículo vía QR, y un paywall freemium con límite de autos y features pro.',
-    },
-    language: 'Vue',
-    live: true,
-    url: 'https://cuidauto.vercel.app/', // live B2C product (lands on login) — open externally
-    screenshots: [], // photos coming — drop sanitized shots into public/projects/ e.g. ['/projects/cuidauto-1.png']
-    gradient: 'linear-gradient(135deg, #1a0f00 0%, #2a1800 50%, #f9731618 100%)',
-    accent: '#f97316',
   },
 ]

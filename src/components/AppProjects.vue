@@ -16,7 +16,7 @@
           <div
             class="project-preview"
             :class="{ clickable: hasAction(project) }"
-            :style="project.screenshots?.length ? null : { background: project.gradient }"
+            :style="project.screenshots?.length && !project.portrait ? null : { background: project.gradient }"
             :role="hasAction(project) ? 'button' : null"
             :tabindex="hasAction(project) ? 0 : null"
             @click="onPreviewClick(project)"
@@ -27,6 +27,7 @@
                 :src="project.screenshots[0]"
                 :alt="`${project.name} screenshot`"
                 class="preview-img"
+                :class="{ portrait: project.portrait }"
                 loading="lazy"
               />
               <div class="preview-zoom">
@@ -108,7 +109,7 @@
     </div>
 
     <q-dialog v-model="lightbox.open">
-      <q-card class="lightbox-card">
+      <q-card class="lightbox-card" :class="{ portrait: lightbox.portrait }">
         <div class="lightbox-head">
           <span class="lightbox-title">{{ lightbox.title }}</span>
           <q-btn flat round dense icon="close" class="lightbox-close" @click="lightbox.open = false" />
@@ -122,6 +123,7 @@
           swipeable
           control-color="primary"
           class="lightbox-carousel"
+          :class="{ portrait: lightbox.portrait }"
         >
           <q-carousel-slide
             v-for="(src, i) in lightbox.images"
@@ -166,7 +168,7 @@ import { useI18n } from '../composables/useI18n.js'
 
 const { m, lang } = useI18n()
 
-const lightbox = reactive({ open: false, slide: 0, title: '', images: [] })
+const lightbox = reactive({ open: false, slide: 0, title: '', images: [], portrait: false })
 const embed = reactive({ open: false, title: '', url: '' })
 
 function hasAction(project) {
@@ -176,6 +178,7 @@ function hasAction(project) {
 function openLightbox(project) {
   lightbox.images = project.screenshots
   lightbox.title = project.name
+  lightbox.portrait = Boolean(project.portrait)
   lightbox.slide = 0
   lightbox.open = true
 }
@@ -243,6 +246,14 @@ function onPreviewClick(project) {
   object-position: top;
   display: block;
   transition: transform 0.3s ease;
+
+  /* Phone-sized shots sit centered on the project gradient instead of being
+     cover-cropped to a thin top strip. */
+  &.portrait {
+    object-fit: contain;
+    object-position: center;
+    padding: 10px 0;
+  }
 }
 
 .preview-zoom {
@@ -449,6 +460,8 @@ function onPreviewClick(project) {
   max-width: 1000px;
   background: var(--bg);
   border: 1px solid var(--border2);
+
+  &.portrait { max-width: 440px; }
 }
 
 .lightbox-head {
@@ -476,6 +489,13 @@ function onPreviewClick(project) {
   aspect-ratio: 16 / 9;
   height: auto;
   max-height: 82vh;
+
+  /* Portrait (mobile) shots get a tall frame so they fill the lightbox with
+     minimal side bars. */
+  &.portrait {
+    aspect-ratio: 9 / 16;
+    max-height: 78vh;
+  }
 }
 
 .lightbox-slide {
