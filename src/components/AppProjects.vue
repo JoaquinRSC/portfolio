@@ -23,11 +23,22 @@
             @keydown.enter="onPreviewClick(project)"
           >
             <template v-if="project.screenshots?.length">
+              <div v-if="project.portrait" class="preview-phones" :style="{ '--accent': project.accent }">
+                <img
+                  v-for="(src, i) in project.screenshots.slice(0, 3)"
+                  :key="i"
+                  :src="src"
+                  :alt="`${project.name} screenshot ${i + 1}`"
+                  class="phone"
+                  :class="`phone-${i}`"
+                  loading="lazy"
+                />
+              </div>
               <img
+                v-else
                 :src="project.screenshots[0]"
                 :alt="`${project.name} screenshot`"
                 class="preview-img"
-                :class="{ portrait: project.portrait }"
                 loading="lazy"
               />
               <div class="preview-zoom">
@@ -108,7 +119,7 @@
       </div>
     </div>
 
-    <q-dialog v-model="lightbox.open">
+    <q-dialog v-model="lightbox.open" @hide="onDialogHide">
       <q-card class="lightbox-card" :class="{ portrait: lightbox.portrait }">
         <div class="lightbox-head">
           <span class="lightbox-title">{{ lightbox.title }}</span>
@@ -137,7 +148,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="embed.open" maximized @hide="embed.url = ''">
+    <q-dialog v-model="embed.open" maximized @hide="onEmbedHide">
       <q-card class="embed-card">
         <div class="embed-head">
           <span class="embed-title">{{ embed.title }} {{ m.projects.embedMeta }}</span>
@@ -161,7 +172,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import { projects, langColor } from '../data/projects.js'
 import { contact } from '../data/contact.js'
 import { useI18n } from '../composables/useI18n.js'
@@ -170,6 +181,28 @@ const { m, lang } = useI18n()
 
 const lightbox = reactive({ open: false, slide: 0, title: '', images: [], portrait: false })
 const embed = reactive({ open: false, title: '', url: '' })
+
+// Quasar locks body scroll while a dialog is open and restores the scroll
+// position when it closes. With `scroll-behavior: smooth` set globally (so nav
+// anchors glide), that restore animates into place — a jarring top-to-bottom
+// slide back to roughly where you were. Disable smooth scrolling while a dialog
+// is open so the restore lands instantly; re-enable it once the dialog has
+// fully closed (on @hide, after Quasar has restored the position).
+watch(
+  () => lightbox.open || embed.open,
+  (open) => {
+    if (open) document.documentElement.style.scrollBehavior = 'auto'
+  },
+)
+
+function onDialogHide() {
+  document.documentElement.style.scrollBehavior = ''
+}
+
+function onEmbedHide() {
+  embed.url = ''
+  onDialogHide()
+}
 
 function hasAction(project) {
   return Boolean(project.demo || project.screenshots?.length || project.url)
@@ -246,15 +279,54 @@ function onPreviewClick(project) {
   object-position: top;
   display: block;
   transition: transform 0.3s ease;
+}
 
-  /* Phone-sized shots sit centered on the project gradient instead of being
-     cover-cropped to a thin top strip. */
-  &.portrait {
-    object-fit: contain;
-    object-position: center;
-    padding: 10px 0;
+/* Portrait (mobile) projects: stack the first shots as a tilted phone trio
+   that fills the 16:9 preview and shows the real product, app-store style. */
+.preview-phones {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 70%;
+    height: 150%;
+    background: radial-gradient(ellipse at center, var(--accent) 0%, transparent 65%);
+    opacity: 0.22;
+    filter: blur(8px);
   }
 }
+
+.phone {
+  position: absolute;
+  height: 124%;
+  width: auto;
+  border-radius: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+  transition: transform 0.3s ease;
+}
+
+.phone-0 { z-index: 3; transform: translateY(7%); }
+
+.phone-1 {
+  z-index: 2;
+  transform: translate(-52%, 4%) rotate(-8deg) scale(0.9);
+  opacity: 0.82;
+}
+
+.phone-2 {
+  z-index: 2;
+  transform: translate(52%, 4%) rotate(8deg) scale(0.9);
+  opacity: 0.82;
+}
+
+.project-card:hover .phone-0 { transform: translateY(4%) scale(1.03); }
 
 .preview-zoom {
   position: absolute;
