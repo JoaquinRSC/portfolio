@@ -17,7 +17,7 @@
       <p class="hero-bio">{{ m.hero.bio }}</p>
       <div class="hero-stats">
         <div class="stat-item">
-          <span class="stat-num">5+</span>
+          <span class="stat-num">5</span>
           <span class="stat-label">{{ m.hero.stats.projects }}</span>
         </div>
         <span class="stat-sep" aria-hidden="true">/</span>

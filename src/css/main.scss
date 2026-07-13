@@ -164,6 +164,19 @@ body {
   &.in-view { opacity: 1; transform: translateY(0); }
 }
 
+// Accessibility & safety net: users who prefer reduced motion (and any case
+// where the reveal observer never fires) get content shown instantly and
+// statically instead of an animated slide-in or a stuck-invisible section.
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 // ── Standalone (installed PWA) ─────────────────────────────────────────────────
 // Hide the scrollbar for a cleaner look once installed, keeping scroll behavior.
 @media all and (display-mode: standalone) {
