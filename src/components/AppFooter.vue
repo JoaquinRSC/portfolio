@@ -54,7 +54,9 @@ const { copyEmail } = useEmail()
   font-family: var(--mono);
   color: var(--muted2);
   transition: color 0.15s;
-  &:hover { color: var(--accent); }
+  @media (hover: hover) {
+    &:hover { color: var(--accent); }
+  }
 }
 
 @media (max-width: 600px) {

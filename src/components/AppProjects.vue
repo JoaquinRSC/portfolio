@@ -76,6 +76,14 @@
               <span v-if="project.private" class="badge badge-private">{{ m.projects.badges.private }}</span>
             </div>
             <p class="project-desc">{{ project.description[lang] }}</p>
+            <div v-if="project.tags?.length" class="project-tags">
+              <span
+                v-for="tag in project.tags"
+                :key="tag"
+                class="tag"
+                :class="{ hot: isHighlightTag(tag) }"
+              >{{ tag }}</span>
+            </div>
             <div class="project-footer">
               <span v-if="project.language" class="lang-badge">
                 <span class="lang-dot" :style="{ background: langColor(project.language) }" />
@@ -123,7 +131,7 @@
       <q-card class="lightbox-card" :class="{ portrait: lightbox.portrait }">
         <div class="lightbox-head">
           <span class="lightbox-title">{{ lightbox.title }}</span>
-          <q-btn flat round dense icon="close" class="lightbox-close" @click="lightbox.open = false" />
+          <q-btn flat round dense icon="close" class="lightbox-close" aria-label="Close" @click="lightbox.open = false" />
         </div>
         <q-carousel
           v-model="lightbox.slide"
@@ -156,7 +164,7 @@
             <a :href="embed.url" target="_blank" rel="noopener" class="embed-open">
               {{ m.projects.openTab }}
             </a>
-            <q-btn flat round dense icon="close" class="lightbox-close" @click="embed.open = false" />
+            <q-btn flat round dense icon="close" class="lightbox-close" aria-label="Close" @click="embed.open = false" />
           </div>
         </div>
         <iframe
@@ -173,7 +181,7 @@
 
 <script setup>
 import { reactive, watch } from 'vue'
-import { projects, langColor } from '../data/projects.js'
+import { projects, langColor, isHighlightTag } from '../data/projects.js'
 import { contact } from '../data/contact.js'
 import { useI18n } from '../composables/useI18n.js'
 
@@ -252,13 +260,17 @@ function onPreviewClick(project) {
   overflow: hidden;
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 
-  &:hover {
-    border-color: rgba(34,197,94,0.4);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(34,197,94,0.08);
+  // Hover lift only on devices with a real pointer, so touch never leaves a
+  // card stuck in its hovered state — it reads as an app, not a web page.
+  @media (hover: hover) {
+    &:hover {
+      border-color: rgba(34,197,94,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(34,197,94,0.08);
 
-    .action-hint:not(.muted) { color: var(--accent); }
-    .preview-img { transform: scale(1.04); }
+      .action-hint:not(.muted) { color: var(--accent); }
+      .preview-img { transform: scale(1.04); }
+    }
   }
 }
 
@@ -326,7 +338,9 @@ function onPreviewClick(project) {
   opacity: 0.82;
 }
 
-.project-card:hover .phone-0 { transform: translateY(4%) scale(1.03); }
+@media (hover: hover) {
+  .project-card:hover .phone-0 { transform: translateY(4%) scale(1.03); }
+}
 
 .preview-zoom {
   position: absolute;
@@ -472,6 +486,31 @@ function onPreviewClick(project) {
   flex: 1;
 }
 
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--muted2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
+  white-space: nowrap;
+
+  // Data/AI tags get the accent so that skill story reads at a glance.
+  &.hot {
+    color: var(--accent);
+    border-color: rgba(34,197,94,0.3);
+    background: rgba(34,197,94,0.06);
+  }
+}
+
 .project-footer {
   display: flex;
   align-items: center;
@@ -523,7 +562,9 @@ function onPreviewClick(project) {
   font-size: 13px;
   color: var(--muted2);
   transition: color 0.15s;
-  &:hover { color: var(--accent); }
+  @media (hover: hover) {
+    &:hover { color: var(--accent); }
+  }
 }
 
 /* Lightbox */
@@ -625,7 +666,9 @@ function onPreviewClick(project) {
   color: var(--muted2);
   white-space: nowrap;
   transition: color 0.15s;
-  &:hover { color: var(--accent); }
+  @media (hover: hover) {
+    &:hover { color: var(--accent); }
+  }
 }
 
 .embed-frame {

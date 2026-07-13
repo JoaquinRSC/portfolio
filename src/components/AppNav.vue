@@ -127,7 +127,7 @@ const { copyEmail } = useEmail()
 
 // Section anchors (the id is also the in-page hash); the visible label is
 // translated per language. Shared by the desktop bar and the mobile panel.
-const sections = ['about', 'projects', 'stack', 'education']
+const sections = ['about', 'projects', 'stack', 'education', 'contact']
 
 const menuOpen = ref(false)
 
@@ -178,7 +178,9 @@ onUnmounted(() => {
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 
-  &:hover { background: rgba(34,197,94,0.08); border-color: var(--accent); }
+  @media (hover: hover) {
+    &:hover { background: rgba(34,197,94,0.08); border-color: var(--accent); }
+  }
 }
 
 .nav-links {
@@ -193,7 +195,9 @@ onUnmounted(() => {
     border-radius: 5px;
     transition: color 0.15s, background 0.15s;
 
-    &:hover { color: var(--accent); background: rgba(34,197,94,0.06); }
+    @media (hover: hover) {
+      &:hover { color: var(--accent); background: rgba(34,197,94,0.06); }
+    }
   }
 }
 
@@ -217,7 +221,9 @@ onUnmounted(() => {
   transition: background 0.15s, border-color 0.15s;
   flex-shrink: 0;
 
-  &:hover { background: rgba(34,197,94,0.08); border-color: var(--accent); }
+  @media (hover: hover) {
+    &:hover { background: rgba(34,197,94,0.08); border-color: var(--accent); }
+  }
 }
 
 .lang-toggle {
@@ -240,7 +246,9 @@ onUnmounted(() => {
   cursor: pointer;
   transition: color 0.15s, background 0.15s;
 
-  &:hover { color: var(--accent); }
+  @media (hover: hover) {
+    &:hover { color: var(--accent); }
+  }
   &.active { color: var(--accent); background: rgba(34,197,94,0.10); }
   & + & { border-left: 1px solid var(--border2); }
 }
@@ -307,7 +315,9 @@ onUnmounted(() => {
   cursor: pointer;
   transition: color 0.15s;
 
-  &:hover { color: var(--accent); }
+  @media (hover: hover) {
+    &:hover { color: var(--accent); }
+  }
 }
 
 .mobile-link {
@@ -318,7 +328,10 @@ onUnmounted(() => {
   border-radius: 6px;
   transition: color 0.15s, background 0.15s;
 
-  &:hover, &:active { color: var(--accent); background: rgba(34,197,94,0.06); }
+  &:active { color: var(--accent); background: rgba(34,197,94,0.06); }
+  @media (hover: hover) {
+    &:hover { color: var(--accent); background: rgba(34,197,94,0.06); }
+  }
 }
 
 .mobile-sep {
@@ -339,7 +352,10 @@ onUnmounted(() => {
   border-radius: 6px;
   transition: color 0.15s, background 0.15s;
 
-  &:hover, &:active { color: var(--accent); background: rgba(34,197,94,0.06); }
+  &:active { color: var(--accent); background: rgba(34,197,94,0.06); }
+  @media (hover: hover) {
+    &:hover { color: var(--accent); background: rgba(34,197,94,0.06); }
+  }
 }
 
 /* Transition: backdrop fades, panel slides in from the right. */

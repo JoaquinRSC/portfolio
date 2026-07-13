@@ -98,13 +98,15 @@ const { m } = useI18n()
   min-width: 82px;
   transition: border-color 0.2s, transform 0.2s, background 0.2s;
 
-  &:hover {
-    border-color: rgba(34,197,94,0.35);
-    background: var(--surface2);
-    transform: translateY(-3px);
+  @media (hover: hover) {
+    &:hover {
+      border-color: rgba(34,197,94,0.35);
+      background: var(--surface2);
+      transform: translateY(-3px);
 
-    .tech-link-icon { opacity: 1; }
-    .tech-name { color: var(--accent); }
+      .tech-link-icon { opacity: 1; }
+      .tech-name { color: var(--accent); }
+    }
   }
 }
 

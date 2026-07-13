@@ -45,7 +45,9 @@ const { m, lang } = useI18n()
   transition: background 0.15s;
 
   &:last-child { border-bottom: none; }
-  &:hover { background: var(--surface); }
+  @media (hover: hover) {
+    &:hover { background: var(--surface); }
+  }
 
   @media (max-width: 640px) { grid-template-columns: 1fr; gap: 10px; }
   @media (max-width: 600px) { padding: 20px; }

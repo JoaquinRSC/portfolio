@@ -4,7 +4,7 @@
 export const messages = {
   en: {
     nav: {
-      links: { about: 'about', projects: 'projects', stack: 'stack', education: 'education' },
+      links: { about: 'about', projects: 'projects', stack: 'stack', education: 'education', contact: 'contact' },
       langLabel: 'Language',
     },
     hero: {
@@ -51,6 +51,13 @@ export const messages = {
       label: 'education',
       title: 'Academic background',
     },
+    contact: {
+      label: 'contact',
+      title: "Let's work together",
+      sub: "I'm after my first Junior / Trainee role — remote or in Montevideo, Uruguay. Email is the fastest way to reach me.",
+      email: 'Email me',
+      cv: 'Download CV',
+    },
     footer: {
       built: 'Built with Vue & Quasar',
       location: 'Montevideo, Uruguay',
@@ -60,7 +67,7 @@ export const messages = {
 
   es: {
     nav: {
-      links: { about: 'sobre mí', projects: 'proyectos', stack: 'stack', education: 'educación' },
+      links: { about: 'sobre mí', projects: 'proyectos', stack: 'stack', education: 'educación', contact: 'contacto' },
       langLabel: 'Idioma',
     },
     hero: {
@@ -106,6 +113,13 @@ export const messages = {
     education: {
       label: 'educación',
       title: 'Formación académica',
+    },
+    contact: {
+      label: 'contacto',
+      title: 'Trabajemos juntos',
+      sub: 'Busco mi primer puesto Junior / Trainee — remoto o en Montevideo, Uruguay. El email es la forma más rápida de contactarme.',
+      email: 'Escribime',
+      cv: 'Descargar CV',
     },
     footer: {
       built: 'Hecho con Vue y Quasar',

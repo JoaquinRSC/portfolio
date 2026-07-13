@@ -8,6 +8,14 @@ export function langColor(lang) {
   return LANG_COLORS[lang] ?? '#52525b'
 }
 
+// Tags that carry the data/AI story get accented on the card so a recruiter
+// scanning for that skillset sees it at a glance; the rest stay neutral.
+const HIGHLIGHT_TAGS = new Set(['AI', 'Data', 'Analytics'])
+
+export function isHighlightTag(tag) {
+  return HIGHLIGHT_TAGS.has(tag)
+}
+
 // Showing proof of private projects without exposing code or data:
 // drop sanitized screenshots (blur prices, names, credentials) into
 // `public/projects/` and list their paths in `screenshots`. The card then
@@ -41,6 +49,7 @@ export const projects = [
       '/projects/cuidauto-5.png', // freemium paywall
       '/projects/cuidauto-6.png', // settings + premium
     ],
+    tags: ['PWA', 'Analytics', 'Web Push'],
     gradient: 'linear-gradient(135deg, #1a0f00 0%, #2a1800 50%, #f9731618 100%)',
     accent: '#f97316',
   },
@@ -54,6 +63,7 @@ export const projects = [
     live: true,
     demo: '/demos/skin-tracker/', // self-hosted demo build, embedded in-page (iframe)
     screenshots: ['/projects/skin-tracker-1.png'],
+    tags: ['Analytics', 'Data', 'Automation'],
     gradient: 'linear-gradient(135deg, #0a0f0a 0%, #0d1f0d 50%, #41b88318 100%)',
     accent: '#41b883',
   },
@@ -67,6 +77,7 @@ export const projects = [
     live: true,
     url: 'https://amtrader.fly.dev/', // live site, public repo — open externally
     screenshots: ['/projects/adoptme-trader-1.png'],
+    tags: ['Data', 'SSR', 'Docker'],
     gradient: 'linear-gradient(135deg, #1a0a14 0%, #2d0d22 50%, #ec489918 100%)',
     accent: '#ec4899',
   },
@@ -80,6 +91,7 @@ export const projects = [
     private: true,
     demo: '/demos/pokemon-accounts/', // read-only UI snapshot with sample data, embedded in-page
     screenshots: ['/projects/pokemon-accounts-1.png'],
+    tags: ['AI', 'Computer Vision', 'Full-stack'],
     gradient: 'linear-gradient(135deg, #1a1500 0%, #2a2200 50%, #facc1518 100%)',
     accent: '#facc15',
   },
@@ -93,6 +105,7 @@ export const projects = [
     private: true,
     demo: '/demos/csfloat/', // read-only UI snapshot with sample data, embedded in-page
     screenshots: ['/projects/csfloat-1.png'],
+    tags: ['Automation', 'Data', 'Node.js'],
     gradient: 'linear-gradient(135deg, #1a1400 0%, #2d2200 50%, #f59e0b18 100%)',
     accent: '#f59e0b',
   },
