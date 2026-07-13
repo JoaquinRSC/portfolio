@@ -149,11 +149,19 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .nav {
-  position: sticky;
+  // `fixed` (not `sticky`) pins to the visual viewport directly. iOS Safari
+  // has a long-standing bug where a `sticky; top: 0` header sits offset by the
+  // address-bar height at the very top of the page until the first scroll —
+  // fixed sidesteps that entirely. `.portfolio` reserves 60px so content still
+  // starts below the bar. `-webkit-` prefix is required for the blur on iOS.
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   background: rgba(6,11,6,0.8);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
 

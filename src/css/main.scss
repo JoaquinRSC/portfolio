@@ -24,7 +24,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html { scroll-behavior: smooth; }
+// scroll-padding-top keeps in-page anchor jumps clear of the fixed 60px nav.
+html { scroll-behavior: smooth; scroll-padding-top: 60px; }
 
 body.body--dark {
   background: var(--bg) !important;
@@ -62,6 +63,9 @@ body {
 .portfolio {
   min-height: 100vh;
   position: relative;
+  // The nav is `position: fixed`, so reserve its 60px height here to keep the
+  // hero starting below it (matches the old sticky in-flow spacing).
+  padding-top: 60px;
   // `clip` (not `hidden`) contains horizontal overflow without turning this
   // element into a scroll container — `overflow-x: hidden` would, which breaks
   // `position: sticky` on the nav (it stops pinning to the viewport on scroll).
