@@ -62,7 +62,10 @@ body {
 .portfolio {
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  // `clip` (not `hidden`) contains horizontal overflow without turning this
+  // element into a scroll container — `overflow-x: hidden` would, which breaks
+  // `position: sticky` on the nav (it stops pinning to the viewport on scroll).
+  overflow-x: clip;
   counter-reset: section;
 }
 
