@@ -1,47 +1,54 @@
-const DI = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons'
+// Icons are devicon v2.16.0 SVGs vendored into public/icons/tech/ so the stack
+// section never depends on (or breaks with) a third-party CDN.
+const icon = (name) => `/icons/tech/${name}.svg`
 
 export const skills = [
   {
     cat: 'Frontend',
     items: [
-      { name: 'Vue.js',     icon: `${DI}/vuejs/vuejs-original.svg`,           url: 'https://vuejs.org' },
-      { name: 'Quasar',     icon: `${DI}/quasar/quasar-original.svg`,         url: 'https://quasar.dev' },
-      { name: 'JavaScript', icon: `${DI}/javascript/javascript-original.svg`, url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
-      { name: 'HTML5',      icon: `${DI}/html5/html5-original.svg`,           url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
-      { name: 'CSS3',       icon: `${DI}/css3/css3-original.svg`,             url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
+      { name: 'Vue.js',     icon: icon('vuejs'),      url: 'https://vuejs.org' },
+      { name: 'Quasar',     icon: icon('quasar'),     url: 'https://quasar.dev' },
+      { name: 'JavaScript', icon: icon('javascript'), url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+      { name: 'TypeScript', icon: icon('typescript'), url: 'https://www.typescriptlang.org' },
+      { name: 'HTML5',      icon: icon('html5'),      url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
+      { name: 'CSS3',       icon: icon('css3'),       url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
     ],
   },
   {
     cat: 'Backend',
     items: [
-      { name: 'Node.js', icon: `${DI}/nodejs/nodejs-original.svg`,              url: 'https://nodejs.org' },
-      { name: 'Express', icon: `${DI}/express/express-original.svg`, invert: true, url: 'https://expressjs.com' },
-      { name: 'PHP',     icon: `${DI}/php/php-original.svg`,                   url: 'https://www.php.net' },
+      { name: 'Node.js',  icon: icon('nodejs'),                  url: 'https://nodejs.org' },
+      { name: 'Express',  icon: icon('express'), invert: true,   url: 'https://expressjs.com' },
+      { name: 'Supabase', icon: icon('supabase'),                url: 'https://supabase.com' },
+      { name: 'PHP',      icon: icon('php'),                     url: 'https://www.php.net' },
     ],
   },
   {
     cat: 'Languages',
     items: [
-      { name: 'C#',   icon: `${DI}/csharp/csharp-original.svg`,       url: 'https://learn.microsoft.com/dotnet/csharp/' },
-      { name: 'C',    icon: `${DI}/c/c-original.svg`,                 url: 'https://en.wikipedia.org/wiki/C_(programming_language)' },
-      { name: 'C++',  icon: `${DI}/cplusplus/cplusplus-original.svg`, url: 'https://isocpp.org' },
-      { name: 'Java', icon: `${DI}/java/java-original.svg`,           url: 'https://www.java.com' },
-      { name: 'Bash', icon: `${DI}/bash/bash-original.svg`,           url: 'https://www.gnu.org/software/bash/' },
+      { name: 'C#',   icon: icon('csharp'),    url: 'https://learn.microsoft.com/dotnet/csharp/' },
+      { name: 'C',    icon: icon('c'),         url: 'https://en.wikipedia.org/wiki/C_(programming_language)' },
+      { name: 'C++',  icon: icon('cplusplus'), url: 'https://isocpp.org' },
+      { name: 'Java', icon: icon('java'),      url: 'https://www.java.com' },
+      { name: 'Bash', icon: icon('bash'),      url: 'https://www.gnu.org/software/bash/' },
     ],
   },
   {
     cat: 'Database',
     items: [
-      { name: 'MySQL', icon: `${DI}/mysql/mysql-original.svg`, url: 'https://www.mysql.com' },
+      { name: 'PostgreSQL', icon: icon('postgresql'), url: 'https://www.postgresql.org' },
+      { name: 'MySQL',      icon: icon('mysql'),      url: 'https://www.mysql.com' },
     ],
   },
   {
     cat: 'Tools',
     items: [
-      { name: 'Git',    icon: `${DI}/git/git-original.svg`,                       url: 'https://git-scm.com' },
-      { name: 'GitHub', icon: `${DI}/github/github-original.svg`, invert: true,   url: 'https://github.com' },
-      { name: 'Linux',  icon: `${DI}/linux/linux-original.svg`,                   url: 'https://www.linux.org' },
-      { name: 'Docker', icon: `${DI}/docker/docker-original.svg`,                 url: 'https://www.docker.com' },
+      { name: 'Git',            icon: icon('git'),                          url: 'https://git-scm.com' },
+      { name: 'GitHub',         icon: icon('github'),        invert: true,  url: 'https://github.com' },
+      { name: 'GitHub Actions', icon: icon('githubactions'),                url: 'https://github.com/features/actions' },
+      { name: 'Docker',         icon: icon('docker'),                       url: 'https://www.docker.com' },
+      { name: 'Vercel',         icon: icon('vercel'),        invert: true,  url: 'https://vercel.com' },
+      { name: 'Linux',          icon: icon('linux'),         invert: true,  url: 'https://www.linux.org' },
     ],
   },
 ]

@@ -1,5 +1,5 @@
 // Minimal service worker: enables PWA install and offline app-shell fallback.
-const CACHE = 'jr-portfolio-v2'
+const CACHE = 'jr-portfolio-v3'
 const SHELL = ['/', '/index.html', '/favicon.svg', '/manifest.webmanifest']
 
 self.addEventListener('install', (event) => {
@@ -18,9 +18,14 @@ self.addEventListener('activate', (event) => {
 })
 
 // Network-first, falling back to cache (and to the app shell for navigations).
+// Only same-origin app assets are cached: embedded demos and Vercel analytics
+// are skipped so the cache can't grow without bound.
 self.addEventListener('fetch', (event) => {
   const { request } = event
   if (request.method !== 'GET') return
+  const url = new URL(request.url)
+  if (url.origin !== self.location.origin) return
+  if (url.pathname.startsWith('/demos/') || url.pathname.startsWith('/_vercel/')) return
   event.respondWith(
     fetch(request)
       .then((res) => {

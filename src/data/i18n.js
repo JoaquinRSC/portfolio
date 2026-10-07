@@ -1,6 +1,7 @@
 // UI copy in both languages. Project and education copy that lives next to its
-// data (long descriptions, degree titles) is kept in projects.js / education.js
-// as { en, es } pairs; everything else — the page chrome — lives here.
+// data (project summaries, highlights and case studies; degree titles) is kept
+// in projects.js / education.js as { en, es } pairs; everything else — the
+// page chrome — lives here.
 export const messages = {
   en: {
     nav: {
@@ -13,14 +14,14 @@ export const messages = {
       greetPost: '.',
       roles: ['Full Stack Developer.', 'Web Developer.', 'Backend Developer.', 'Problem Solver.'],
       bio: 'IT student and full-stack developer from Uruguay. Building real-world web apps with Vue, Quasar & Node.js since 2019 — currently looking for my first Junior / Trainee role.',
-      stats: { projects: 'Projects', years: 'Years coding', languages: 'Languages' },
+      stats: { projects: 'Projects', years: 'Years coding', live: 'Live apps' },
       actions: { projects: 'View projects', cv: 'Download CV', email: 'Email me' },
     },
     about: {
       label: 'about',
       title: 'A bit about me',
       p1: "I'm a self-taught developer wrapping up a Computer Science technologist degree in Uruguay. Most of what I know came from building things end to end — not following tutorials, but shipping real apps that other people actually use, and that I keep maintaining over time.",
-      p2: "I work across the stack with Vue, Quasar and Node.js, and I'm increasingly pulled toward the data and AI side of software — a few of the projects here already lean on vision models and price analytics. Now I'm after my first Junior / Trainee role to keep building like this on a team.",
+      p2: "I work across the stack with Vue, Quasar and Node.js, and I'm increasingly pulled toward the data and AI side of software — most of the projects here are built around data pipelines: scheduled refresh jobs, open-data feeds and price analytics. Now I'm after my first Junior / Trainee role to keep building like this on a team.",
       facts: {
         based: 'Montevideo, Uruguay',
         role: 'Full-stack developer',
@@ -34,7 +35,8 @@ export const messages = {
       title: "Things I've built",
       sub: 'Live demos where possible, and sanitized previews of private work',
       badges: { live: 'Live', private: 'Private', wip: 'In Progress' },
-      actions: { demo: 'Try demo ▶', open: 'Open ↗', screenshots: 'Screenshots ⤢', private: 'Code private' },
+      actions: { demo: 'Try demo ▶', open: 'Open ↗', screenshots: 'Screenshots ⤢', private: 'Code private', caseStudy: 'Case study' },
+      case: { title: 'case study', problem: 'The problem', architecture: 'How it works', decisions: 'Key decisions', next: 'What I’d do next' },
       tryLive: '▶ Try it live',
       shots: (n) => `⤢ ${n} screenshot${n > 1 ? 's' : ''}`,
       embedMeta: '· live demo · sample data',
@@ -76,14 +78,14 @@ export const messages = {
       greetPost: '.',
       roles: ['Desarrollador Full Stack.', 'Desarrollador Web.', 'Desarrollador Backend.', 'Resuelvo problemas.'],
       bio: 'Estudiante de informática y desarrollador full-stack de Uruguay. Construyo apps web reales con Vue, Quasar y Node.js desde 2019 — busco mi primer puesto Junior / Trainee.',
-      stats: { projects: 'Proyectos', years: 'Años programando', languages: 'Lenguajes' },
+      stats: { projects: 'Proyectos', years: 'Años programando', live: 'Apps en vivo' },
       actions: { projects: 'Ver proyectos', cv: 'Descargar CV', email: 'Escribime' },
     },
     about: {
       label: 'sobre mí',
       title: 'Un poco sobre mí',
       p1: 'Soy un desarrollador autodidacta terminando un Tecnólogo en Informática en Uruguay. Casi todo lo que sé lo aprendí construyendo cosas de punta a punta — no siguiendo tutoriales, sino lanzando apps reales que otra gente usa, y que mantengo en el tiempo.',
-      p2: 'Trabajo en todo el stack con Vue, Quasar y Node.js, y cada vez me atrae más el lado de datos e IA — varios de los proyectos acá ya usan modelos de visión y análisis de precios. Ahora busco mi primer puesto Junior / Trainee para seguir construyendo así, en equipo.',
+      p2: 'Trabajo en todo el stack con Vue, Quasar y Node.js, y cada vez me atrae más el lado de datos e IA — la mayoría de los proyectos acá giran en torno a pipelines de datos: jobs programados, datos abiertos y análisis de precios. Ahora busco mi primer puesto Junior / Trainee para seguir construyendo así, en equipo.',
       facts: {
         based: 'Montevideo, Uruguay',
         role: 'Desarrollador full-stack',
@@ -97,7 +99,8 @@ export const messages = {
       title: 'Lo que construí',
       sub: 'Demos en vivo cuando se puede, y vistas sanitizadas del trabajo privado',
       badges: { live: 'En vivo', private: 'Privado', wip: 'En progreso' },
-      actions: { demo: 'Probar demo ▶', open: 'Abrir ↗', screenshots: 'Capturas ⤢', private: 'Código privado' },
+      actions: { demo: 'Probar demo ▶', open: 'Abrir ↗', screenshots: 'Capturas ⤢', private: 'Código privado', caseStudy: 'Caso de estudio' },
+      case: { title: 'caso de estudio', problem: 'El problema', architecture: 'Cómo funciona', decisions: 'Decisiones clave', next: 'Qué haría después' },
       tryLive: '▶ Probar en vivo',
       shots: (n) => `⤢ ${n} captura${n > 1 ? 's' : ''}`,
       embedMeta: '· demo en vivo · datos de ejemplo',

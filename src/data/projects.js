@@ -1,16 +1,16 @@
 const LANG_COLORS = {
   JavaScript: '#f1e05a',
   Vue:        '#41b883',
-  Python:     '#3572A5',
+  TypeScript: '#3178c6',
 }
 
 export function langColor(lang) {
   return LANG_COLORS[lang] ?? '#52525b'
 }
 
-// Tags that carry the data/AI story get accented on the card so a recruiter
+// Tags that carry the data story get accented on the card so a recruiter
 // scanning for that skillset sees it at a glance; the rest stay neutral.
-const HIGHLIGHT_TAGS = new Set(['AI', 'Data', 'Analytics'])
+const HIGHLIGHT_TAGS = new Set(['Data', 'Analytics', 'Open Data'])
 
 export function isHighlightTag(tag) {
   return HIGHLIGHT_TAGS.has(tag)
@@ -26,6 +26,9 @@ export function isHighlightTag(tag) {
 // Action fields (checked in this priority): `demo` (URL embedded in-page via
 // iframe so visitors try it without leaving), `screenshots` (open a lightbox),
 // `url` (open externally).
+// Copy fields (all { en, es }): `summary` is the one-line pitch, `highlights`
+// the 3-4 bullets a recruiter actually reads, and the optional `caseStudy`
+// ({ problem, architecture, decisions, next }) opens a write-up dialog.
 // Status flags: `live` (deployed), `private` (code not public, proven via
 // screenshots/demo), `wip` (still in development).
 // `portrait: true` marks phone-sized (portrait) screenshots so the card and
@@ -33,9 +36,63 @@ export function isHighlightTag(tag) {
 export const projects = [
   {
     name: 'Cuidauto',
-    description: {
-      en: 'Vue 3 + Quasar PWA (Supabase backend) to track car maintenance and Uruguayan legal deadlines — ITV, SUCIVE/patente, SOA and libreta. Sends Web Push reminders before each obligation expires (daily pg_cron job triggering an Edge Function), with vehicle CRUD and maintenance history, expense charts with date-range filters, a public read-only vehicle page via QR, and a freemium paywall with a car limit and pro-feature gating.',
-      es: 'PWA en Vue 3 + Quasar (backend Supabase) para llevar el mantenimiento del auto y los vencimientos legales uruguayos — ITV, SUCIVE/patente, SOA y libreta. Envía recordatorios Web Push antes de que venza cada obligación (un pg_cron diario que dispara una Edge Function), con CRUD de vehículos e historial de mantenimiento, gráficos de gastos con filtros por rango de fechas, una página pública de solo lectura del vehículo vía QR, y un paywall freemium con límite de autos y features pro.',
+    summary: {
+      en: 'PWA for Uruguayan drivers: maintenance, legal deadlines (ITV, SOA, patente, libreta) and running costs in one place, with push reminders before anything expires.',
+      es: 'PWA para conductores uruguayos: mantenimiento, vencimientos legales (ITV, SOA, patente, libreta) y costos del auto en un solo lugar, con avisos push antes de que venza algo.',
+    },
+    highlights: {
+      en: [
+        'Daily pg_cron job → Edge Function → one grouped Web Push per user, deduplicated with a reminder log',
+        'Fuel costs priced from official ANCAP data, pulled monthly from Uruguay’s open-data catalog',
+        'Row Level Security on every table; the free-plan limit is enforced by a DB trigger, not just the UI',
+        'Offline garage, document vault with signed URLs, QR history page, data export and account deletion',
+      ],
+      es: [
+        'pg_cron diario → Edge Function → un Web Push agrupado por usuario, sin repetidos gracias a un log de avisos',
+        'Costo de combustible con precios oficiales de ANCAP, traídos cada mes del catálogo de datos abiertos',
+        'Row Level Security en todas las tablas; el límite del plan gratis lo impone un trigger, no solo la UI',
+        'Garage offline, guantera digital con URLs firmadas, historial público por QR, exportación de datos y baja de cuenta',
+      ],
+    },
+    caseStudy: {
+      problem: {
+        en: 'In Uruguay a car comes with several legal deadlines — ITV inspection, SOA insurance, patente, driver’s licence — on top of regular maintenance, and each one lives somewhere different. Missing one means a fine. I wanted a single app that keeps all of it and warns you before anything is due, without having to open it.',
+        es: 'En Uruguay un auto trae varios vencimientos legales — ITV, SOA, patente, libreta — además del mantenimiento, y cada uno vive en un lugar distinto. Olvidarse uno es una multa. Quería una sola app que lo junte todo y te avise antes de que venza, sin tener que abrirla.',
+      },
+      architecture: {
+        en: [
+          'Vue 3 + Quasar PWA on Vercel (Pinia stores), with a custom Workbox service worker that caches Supabase reads so the garage works offline.',
+          'Supabase Postgres with RLS on every table; Auth (email + Google), a private bucket for documents and a public one for car photos.',
+          'A daily pg_cron job calls the send-reminders Edge Function, protected by a shared-secret header.',
+          'The function works out what is due soon or overdue (by km or by date, whichever comes first), skips anything already sent via reminder_log, and sends one grouped Web Push per user (VAPID).',
+          'A monthly Edge Function imports ANCAP fuel prices from catalogodatos.gub.uy, smoothing over the feed’s gaps and outliers.',
+        ],
+        es: [
+          'PWA en Vue 3 + Quasar sobre Vercel (stores con Pinia), con un service worker propio de Workbox que cachea las lecturas de Supabase para que el garage ande offline.',
+          'Supabase Postgres con RLS en todas las tablas; Auth (email + Google), un bucket privado para documentos y uno público para fotos.',
+          'Un job diario de pg_cron llama a la Edge Function send-reminders, protegida con un header de secreto compartido.',
+          'La función calcula qué está por vencer o vencido (por km o por fecha, lo que llegue primero), saltea lo ya avisado con reminder_log, y manda un Web Push agrupado por usuario (VAPID).',
+          'Una Edge Function mensual importa los precios de combustible de ANCAP desde catalogodatos.gub.uy, suavizando los huecos y valores raros del feed.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Rules live in the database, not the client: RLS and a SECURITY DEFINER trigger mean a tampered client can’t read other users’ data or skip the car limit.',
+          'The Mercado Pago webhook never trusts its payload — it verifies the HMAC signature (timing-safe) and re-fetches the subscription before touching a user’s plan.',
+          'Reminders, deadlines and push stay free on purpose; only charts and the QR page are premium, so what saves you from a fine is never paywalled.',
+          'Privacy by design for Ley 18.331: account deletion wipes storage and cascades through every table, and exports (JSON / CSV) guard against CSV formula injection.',
+        ],
+        es: [
+          'Las reglas viven en la base, no en el cliente: RLS y un trigger SECURITY DEFINER hacen que un cliente modificado no pueda leer datos ajenos ni saltear el límite de autos.',
+          'El webhook de Mercado Pago no confía en el payload — verifica la firma HMAC (comparación timing-safe) y vuelve a pedir la suscripción antes de tocar el plan.',
+          'Avisos, vencimientos y push son gratis a propósito; solo los gráficos y el QR son premium, para no cobrar por lo que te evita una multa.',
+          'Privacidad desde el diseño por la Ley 18.331: la baja de cuenta borra el storage y cascadea por todas las tablas, y las exportaciones (JSON / CSV) evitan la inyección de fórmulas.',
+        ],
+      },
+      next: {
+        en: 'The due-date rules currently exist twice — in the app (unit-tested with Vitest) and mirrored in the Edge Function. Next I’d move them into one shared module so they can’t drift, add an end-to-end test for the reminder pipeline, and take the already-integrated Mercado Pago subscriptions to production.',
+        es: 'Las reglas de vencimiento hoy existen dos veces — en la app (con tests unitarios en Vitest) y replicadas en la Edge Function. Lo próximo sería moverlas a un módulo compartido para que no se desincronicen, sumar un test end-to-end del pipeline de avisos, y llevar a producción las suscripciones de Mercado Pago, que ya están integradas.',
+      },
     },
     language: 'Vue',
     live: true,
@@ -49,57 +106,85 @@ export const projects = [
       '/projects/cuidauto-5.png', // freemium paywall
       '/projects/cuidauto-6.png', // settings + premium
     ],
-    tags: ['PWA', 'Analytics', 'Web Push'],
+    tags: ['PWA', 'Supabase', 'Open Data', 'Web Push'],
     gradient: 'linear-gradient(135deg, #1a0f00 0%, #2a1800 50%, #f9731618 100%)',
     accent: '#f97316',
   },
   {
     name: 'CS2 Skin Tracker',
-    description: {
-      en: 'Vue 3 + Quasar PWA to track a CS2 skin investment portfolio. Syncs inventory from Google Sheets, enriches items with images and live Buff163 prices, and shows analytics (P&L, monthly profit, best/worst trades) plus arbitrage detection comparing skin.land vs Buff163.',
-      es: 'PWA en Vue 3 + Quasar para trackear un portafolio de inversión en skins de CS2. Sincroniza el inventario desde Google Sheets, enriquece los ítems con imágenes y precios en vivo de Buff163, y muestra analíticas (P&L, ganancia mensual, mejores/peores trades) más detección de arbitraje comparando skin.land vs Buff163.',
+    summary: {
+      en: 'PWA that tracks a CS2 skin trading portfolio — 794 trades so far — with P&L analytics, an equity curve and portfolio value over time.',
+      es: 'PWA que trackea un portafolio de trading de skins de CS2 — 794 trades hasta ahora — con analíticas de P&L, curva de equity y valor del portafolio en el tiempo.',
+    },
+    highlights: {
+      en: [
+        'Data pipeline: Google Sheets CSV → custom parser (fixes messy dates and ×N quantities) → item images and Buff163 prices',
+        'GitHub Actions refreshes the data every 6 h, snapshots daily portfolio value and triggers a Vercel redeploy',
+        'Hand-built SVG charts (no chart library): monthly profit, allocation, per-item P&L, equity curve',
+        'Vercel serverless API with an origin allowlist and rate limiting; 42 Vitest tests run in CI',
+      ],
+      es: [
+        'Pipeline de datos: CSV de Google Sheets → parser propio (arregla fechas sucias y cantidades ×N) → imágenes y precios de Buff163',
+        'GitHub Actions refresca los datos cada 6 h, guarda un snapshot diario del valor y dispara un redeploy en Vercel',
+        'Gráficos SVG hechos a mano (sin librería): ganancia mensual, distribución, P&L por ítem, curva de equity',
+        'API serverless en Vercel con allowlist de orígenes y rate limiting; 42 tests en Vitest corriendo en CI',
+      ],
     },
     language: 'Vue',
     live: true,
     demo: '/demos/skin-tracker/', // self-hosted demo build, embedded in-page (iframe)
     screenshots: ['/projects/skin-tracker-1.png'],
-    tags: ['Analytics', 'Data', 'Automation'],
+    tags: ['Data', 'Analytics', 'GitHub Actions'],
     gradient: 'linear-gradient(135deg, #0a0f0a 0%, #0d1f0d 50%, #41b88318 100%)',
     accent: '#41b883',
   },
   {
     name: 'AdoptMe Trader',
-    description: {
-      en: 'Quasar v2 SSR app (Vue 3 + Pinia + TypeScript) to value pets and judge trade fairness in Roblox Adopt Me. Cross-checks two community value sources (AMVGG and Elvebredd), derives per-form values (Fly/Ride/Neon/Mega) from base values via the AMVGG multiplier formula, and scores demand-adjusted fairness with balancing suggestions. Also browses the live AMVGG market for fair offers. All external sites are fetched server-side and cached in memory; deployed on Fly.io via a multi-stage Docker build.',
-      es: 'App SSR en Quasar v2 (Vue 3 + Pinia + TypeScript) para valuar mascotas y juzgar si un trade es justo en Roblox Adopt Me. Cruza dos fuentes de valor de la comunidad (AMVGG y Elvebredd), deriva los valores por forma (Fly/Ride/Neon/Mega) desde los valores base con la fórmula de multiplicadores de AMVGG, y puntúa la justicia ajustada por demanda con sugerencias para balancear. También recorre el mercado en vivo de AMVGG buscando ofertas justas. Todos los sitios externos se consultan del lado del servidor y se cachean en memoria; deployado en Fly.io con un build Docker multi-stage.',
+    summary: {
+      en: 'Server-rendered PWA that gives any Roblox Adopt Me trade a WIN / FAIR / LOSE verdict, cross-checking two community value sources across 775 pets and 783 items.',
+      es: 'PWA renderizada en el servidor que le da a cualquier trade de Roblox Adopt Me un veredicto WIN / FAIR / LOSE, cruzando dos fuentes de valores sobre 775 mascotas y 783 ítems.',
     },
-    language: 'Vue',
+    highlights: {
+      en: [
+        'Derives every pet form (Fly / Ride / Neon / Mega) from base values with the AMVGG multiplier formula',
+        'Shareable trade links with a PNG preview image rendered server-side from SVG (resvg)',
+        'SSR pet pages with per-page meta tags and a generated sitemap for SEO',
+        'GitHub Actions re-fetches both sources every 4 h and redeploys to Fly.io (Docker) only when values change',
+      ],
+      es: [
+        'Deriva cada forma de mascota (Fly / Ride / Neon / Mega) desde el valor base con la fórmula de multiplicadores de AMVGG',
+        'Links de trade compartibles con una imagen de preview PNG generada en el servidor desde SVG (resvg)',
+        'Páginas SSR por mascota con meta tags propios y sitemap generado para SEO',
+        'GitHub Actions vuelve a traer ambas fuentes cada 4 h y redeploya en Fly.io (Docker) solo si cambiaron los valores',
+      ],
+    },
+    language: 'TypeScript',
     live: true,
     url: 'https://amtrader.fly.dev/', // live site, public repo — open externally
     screenshots: ['/projects/adoptme-trader-1.png'],
-    tags: ['Data', 'SSR', 'Docker'],
+    tags: ['SSR', 'Data', 'Docker', 'CI/CD'],
     gradient: 'linear-gradient(135deg, #1a0a14 0%, #2d0d22 50%, #ec489918 100%)',
     accent: '#ec4899',
   },
   {
-    name: 'PokéAccounts',
-    description: {
-      en: 'Full-stack dashboard (Vue 3 + Quasar frontend, Node.js + Express + SQLite backend) to manage and list a Pokémon GO account inventory on the Eldorado marketplace. Uses Claude (Haiku) vision to read profile screenshots and extract structured stats (level, stardust, shinies, 100% IVs, team) plus a suggested price from comparable listings, and Sharp to auto-blur trainer names on upload for privacy. Handles bulk publish, market-based auto-repricing, pause/resume, and order/sales sync, with a sales analytics view. Adds password login (scrypt + signed session), a Web Push alert before the Eldorado token expires, a browser extension to keep that token synced, and u7buy cross-posting. PWA-ready and responsive.',
-      es: 'Dashboard full-stack (frontend Vue 3 + Quasar, backend Node.js + Express + SQLite) para gestionar y publicar un inventario de cuentas de Pokémon GO en el marketplace Eldorado. Usa la visión de Claude (Haiku) para leer capturas de perfil y extraer stats estructurados (nivel, polvo estelar, shinies, IVs 100%, equipo) más un precio sugerido a partir de publicaciones comparables, y Sharp para difuminar automáticamente los nombres de entrenador al subir, por privacidad. Maneja publicación masiva, re-precio automático según el mercado, pausar/reanudar, y sincronización de órdenes/ventas, con una vista de analíticas de ventas. Suma login con contraseña (scrypt + sesión firmada), un aviso Web Push antes de que expire el token de Eldorado, una extensión de navegador para mantener ese token sincronizado, y cross-posting a u7buy. Lista para PWA y responsive.',
-    },
-    language: 'Vue',
-    private: true,
-    demo: '/demos/pokemon-accounts/', // read-only UI snapshot with sample data, embedded in-page
-    screenshots: ['/projects/pokemon-accounts-1.png'],
-    tags: ['AI', 'Computer Vision', 'Full-stack'],
-    gradient: 'linear-gradient(135deg, #1a1500 0%, #2a2200 50%, #facc1518 100%)',
-    accent: '#facc15',
-  },
-  {
     name: 'CSFloat Buy Orders',
-    description: {
-      en: 'Node.js web app that automates CS2 buy orders on CSFloat using live Buff163 prices (via SkinsTrack). Scans a skin pool, compares against CSFloat top buy orders, and places orders that pass a ratio filter, plus a background scanner that flags listings cheap enough to flip. Handles per-skin float ranges, pause/resume, and Cloudflare rate-limit backoff.',
-      es: 'App web en Node.js que automatiza órdenes de compra de CS2 en CSFloat usando precios en vivo de Buff163 (vía SkinsTrack). Escanea un pool de skins, compara contra las mejores órdenes de compra de CSFloat, y coloca órdenes que pasan un filtro de ratio, más un escáner en segundo plano que marca publicaciones lo bastante baratas para revender. Maneja rangos de float por skin, pausar/reanudar, y backoff ante el rate-limit de Cloudflare.',
+    summary: {
+      en: 'Self-hosted Node.js bot that runs a CS2 buy-order strategy on CSFloat against live Buff163 prices — 116 orders filled and logged to Google Sheets so far.',
+      es: 'Bot en Node.js self-hosted que ejecuta una estrategia de órdenes de compra de CS2 en CSFloat contra precios en vivo de Buff163 — 116 órdenes ejecutadas y registradas en Google Sheets hasta ahora.',
+    },
+    highlights: {
+      en: [
+        'Per-skin ratio threshold scaled by liquidity, ignoring narrow “float-hunter” bids when reading the top bid',
+        'Prioritised scan of a 4,000+ skin pool, using an on-disk ratio cache to cut API calls',
+        'Maintenance mode reprices open orders and fixes their float ranges; a background flip scanner streams over SSE',
+        'Rate-limit backoff driven by CSFloat’s headers, a balance-based order cap, dry-run mode and resumable runs',
+      ],
+      es: [
+        'Umbral de ratio por skin escalado según la liquidez, ignorando las ofertas de “float-hunters” al leer la mejor orden',
+        'Escaneo priorizado de un pool de más de 4.000 skins, con un caché de ratios en disco para ahorrar llamadas',
+        'Modo mantenimiento que re-precia las órdenes abiertas y corrige sus rangos de float; escáner de reventa en segundo plano por SSE',
+        'Backoff según los headers de rate-limit de CSFloat, tope de órdenes según el saldo, modo dry-run y corridas reanudables',
+      ],
     },
     language: 'JavaScript',
     private: true,

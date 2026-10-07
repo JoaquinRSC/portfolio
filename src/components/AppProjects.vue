@@ -75,7 +75,10 @@
               <span v-else-if="project.wip" class="badge badge-wip">{{ m.projects.badges.wip }}</span>
               <span v-if="project.private" class="badge badge-private">{{ m.projects.badges.private }}</span>
             </div>
-            <p class="project-desc">{{ project.description[lang] }}</p>
+            <p class="project-desc">{{ project.summary[lang] }}</p>
+            <ul v-if="project.highlights" class="accent-list project-highlights">
+              <li v-for="(item, i) in project.highlights[lang]" :key="i">{{ item }}</li>
+            </ul>
             <div v-if="project.tags?.length" class="project-tags">
               <span
                 v-for="tag in project.tags"
@@ -89,6 +92,14 @@
                 <span class="lang-dot" :style="{ background: langColor(project.language) }" />
                 {{ project.language }}
               </span>
+              <button
+                v-if="project.caseStudy"
+                type="button"
+                class="action-hint as-button"
+                @click="openCaseStudy(project)"
+              >
+                {{ m.projects.actions.caseStudy }}
+              </button>
               <button
                 v-if="project.demo"
                 type="button"
@@ -131,7 +142,7 @@
       <q-card class="lightbox-card" :class="{ portrait: lightbox.portrait }">
         <div class="lightbox-head">
           <span class="lightbox-title">{{ lightbox.title }}</span>
-          <q-btn flat round dense icon="close" class="lightbox-close" aria-label="Close" @click="lightbox.open = false" />
+          <q-btn flat round dense :icon="mdiClose" class="lightbox-close" aria-label="Close" @click="lightbox.open = false" />
         </div>
         <q-carousel
           v-model="lightbox.slide"
@@ -156,6 +167,24 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog v-model="caseStudy.open" @hide="onDialogHide">
+      <q-card v-if="caseStudy.project" class="lightbox-card case-card">
+        <div class="lightbox-head">
+          <span class="lightbox-title">{{ caseStudy.project.name }} — {{ m.projects.case.title }}</span>
+          <q-btn flat round dense :icon="mdiClose" class="lightbox-close" aria-label="Close" @click="caseStudy.open = false" />
+        </div>
+        <div class="case-body">
+          <section v-for="block in caseBlocks" :key="block.key" class="case-block">
+            <h3 class="case-heading">{{ m.projects.case[block.key] }}</h3>
+            <p v-if="typeof block.content === 'string'">{{ block.content }}</p>
+            <component :is="block.ordered ? 'ol' : 'ul'" v-else class="accent-list case-list">
+              <li v-for="(item, i) in block.content" :key="i">{{ item }}</li>
+            </component>
+          </section>
+        </div>
+      </q-card>
+    </q-dialog>
+
     <q-dialog v-model="embed.open" maximized @hide="onEmbedHide">
       <q-card class="embed-card">
         <div class="embed-head">
@@ -164,7 +193,7 @@
             <a :href="embed.url" target="_blank" rel="noopener" class="embed-open">
               {{ m.projects.openTab }}
             </a>
-            <q-btn flat round dense icon="close" class="lightbox-close" aria-label="Close" @click="embed.open = false" />
+            <q-btn flat round dense :icon="mdiClose" class="lightbox-close" aria-label="Close" @click="embed.open = false" />
           </div>
         </div>
         <iframe
@@ -180,7 +209,8 @@
 </template>
 
 <script setup>
-import { reactive, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
+import { mdiClose } from '@quasar/extras/mdi-v7'
 import { projects, langColor, isHighlightTag } from '../data/projects.js'
 import { contact } from '../data/contact.js'
 import { useI18n } from '../composables/useI18n.js'
@@ -189,6 +219,23 @@ const { m, lang } = useI18n()
 
 const lightbox = reactive({ open: false, slide: 0, title: '', images: [], portrait: false })
 const embed = reactive({ open: false, title: '', url: '' })
+const caseStudy = reactive({ open: false, project: null })
+
+// Case study sections in reading order; each is either a paragraph (string)
+// or a list (array), localized from the project's `caseStudy` field.
+const CASE_SECTIONS = [
+  { key: 'problem' },
+  { key: 'architecture', ordered: true },
+  { key: 'decisions' },
+  { key: 'next' },
+]
+const caseBlocks = computed(() => {
+  const data = caseStudy.project?.caseStudy
+  if (!data) return []
+  return CASE_SECTIONS
+    .filter(({ key }) => data[key])
+    .map((section) => ({ ...section, content: data[section.key][lang.value] }))
+})
 
 // Quasar locks body scroll while a dialog is open and restores the scroll
 // position when it closes. With `scroll-behavior: smooth` set globally (so nav
@@ -197,7 +244,7 @@ const embed = reactive({ open: false, title: '', url: '' })
 // is open so the restore lands instantly; re-enable it once the dialog has
 // fully closed (on @hide, after Quasar has restored the position).
 watch(
-  () => lightbox.open || embed.open,
+  () => lightbox.open || embed.open || caseStudy.open,
   (open) => {
     if (open) document.documentElement.style.scrollBehavior = 'auto'
   },
@@ -230,6 +277,11 @@ function openEmbed(project) {
   embed.open = true
 }
 
+function openCaseStudy(project) {
+  caseStudy.project = project
+  caseStudy.open = true
+}
+
 function onPreviewClick(project) {
   if (project.demo) {
     openEmbed(project)
@@ -244,11 +296,10 @@ function onPreviewClick(project) {
 <style scoped lang="scss">
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
 
-  @media (max-width: 860px) { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 520px) { grid-template-columns: 1fr; }
+  @media (max-width: 680px) { grid-template-columns: 1fr; }
 }
 
 .project-card {
@@ -480,13 +531,31 @@ function onPreviewClick(project) {
 }
 
 .project-desc {
-  font-size: 12px;
-  color: var(--muted2);
-  line-height: 1.65;
-  flex: 1;
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
 }
 
+.accent-list {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  li::marker { color: var(--accent); }
+}
+
+.project-highlights {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--muted2);
+}
+
+// Tags + footer sit at the bottom so cards in a row line up regardless of
+// how long their copy is.
 .project-tags {
+  margin-top: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -514,6 +583,7 @@ function onPreviewClick(project) {
 .project-footer {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
   padding-top: 10px;
   border-top: 1px solid var(--border);
@@ -521,6 +591,7 @@ function onPreviewClick(project) {
 }
 
 .lang-badge {
+  margin-right: auto;
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -537,7 +608,6 @@ function onPreviewClick(project) {
 }
 
 .action-hint {
-  margin-left: auto;
   font-family: var(--mono);
   font-size: 11px;
   color: var(--muted);
@@ -623,6 +693,47 @@ function onPreviewClick(project) {
   max-height: 100%;
   object-fit: contain;
 }
+
+/* Case study */
+.case-card {
+  max-width: 720px;
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-body {
+  scrollbar-color: var(--border2) transparent;
+  overflow-y: auto;
+  padding: 8px 22px 24px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted2);
+}
+
+.case-block {
+  margin-top: 18px;
+
+  p { margin: 0; }
+}
+
+.case-heading {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--accent);
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.case-list {
+  padding-left: 18px;
+  gap: 6px;
+}
+
+ol.case-list li::marker { font-family: var(--mono); font-weight: 700; }
 
 /* Embedded live demo */
 .embed-card {

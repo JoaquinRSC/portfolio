@@ -8,4 +8,7 @@ export const contact = {
   linkedin: 'https://www.linkedin.com/in/joaquin-rossi-dev',
 }
 
+// Year I started coding; drives the hero's "years coding" stat.
+export const codingSince = 2019
+
 export const mailto = `mailto:${contact.email}`

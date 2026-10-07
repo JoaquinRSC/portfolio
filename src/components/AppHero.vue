@@ -17,18 +17,18 @@
       <p class="hero-bio">{{ m.hero.bio }}</p>
       <div class="hero-stats">
         <div class="stat-item">
-          <span class="stat-num">5</span>
+          <span class="stat-num">{{ projects.length }}</span>
           <span class="stat-label">{{ m.hero.stats.projects }}</span>
         </div>
         <span class="stat-sep" aria-hidden="true">/</span>
         <div class="stat-item">
-          <span class="stat-num">6+</span>
+          <span class="stat-num">{{ yearsCoding }}+</span>
           <span class="stat-label">{{ m.hero.stats.years }}</span>
         </div>
         <span class="stat-sep" aria-hidden="true">/</span>
         <div class="stat-item">
-          <span class="stat-num">5</span>
-          <span class="stat-label">{{ m.hero.stats.languages }}</span>
+          <span class="stat-num">{{ liveCount }}</span>
+          <span class="stat-label">{{ m.hero.stats.live }}</span>
         </div>
       </div>
       <div class="hero-actions">
@@ -48,6 +48,9 @@
           </svg>
           {{ m.hero.actions.email }}
         </a>
+        <a :href="contact.linkedin" target="_blank" rel="noopener" class="btn-ghost">
+          LinkedIn ↗
+        </a>
         <a :href="contact.github" target="_blank" rel="noopener" class="btn-ghost">
           GitHub ↗
         </a>
@@ -59,7 +62,8 @@
 <script setup>
 import { computed } from 'vue'
 import { useTypewriter } from '../composables/useTypewriter.js'
-import { contact, mailto } from '../data/contact.js'
+import { contact, mailto, codingSince } from '../data/contact.js'
+import { projects } from '../data/projects.js'
 import { useI18n } from '../composables/useI18n.js'
 import { useEmail } from '../composables/useEmail.js'
 
@@ -67,6 +71,10 @@ const { m } = useI18n()
 const { copyEmail } = useEmail()
 const roles = computed(() => m.value.hero.roles)
 const { displayText } = useTypewriter(roles)
+
+// Derived from the data so the stats never drift when projects change.
+const liveCount = projects.filter((p) => p.live).length
+const yearsCoding = new Date().getFullYear() - codingSince
 </script>
 
 <style scoped lang="scss">
