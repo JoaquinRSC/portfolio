@@ -10,6 +10,7 @@ export const skills = [
       { name: 'Quasar',     icon: icon('quasar'),     url: 'https://quasar.dev' },
       { name: 'JavaScript', icon: icon('javascript'), url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
       { name: 'TypeScript', icon: icon('typescript'), url: 'https://www.typescriptlang.org' },
+      { name: 'Tailwind',   icon: icon('tailwindcss'), url: 'https://tailwindcss.com' },
       { name: 'HTML5',      icon: icon('html5'),      url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
       { name: 'CSS3',       icon: icon('css3'),       url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
     ],

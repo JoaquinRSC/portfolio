@@ -35,6 +35,34 @@ export function isHighlightTag(tag) {
 // lightbox frame them as a device instead of cover-cropping a 16:9 strip.
 export const projects = [
   {
+    name: 'Vidriera',
+    summary: {
+      en: 'Aggregator of the used-car stock of 27 Uruguayan dealerships — 2,300+ cars in one search, with price history, days in stock and a fair-price check against similar cars.',
+      es: 'Agregador del stock de usados de 27 automotoras uruguayas — más de 2.300 autos en una sola búsqueda, con historial de precios, días en stock y comparación contra autos similares.',
+    },
+    highlights: {
+      en: [
+        'Ingestion pipeline in TypeScript: 13 source adapters (Multiaviso signed API, WooCommerce, Magento, Astro islands…), each tested against recorded responses',
+        'Scheduled on pg_cron → Edge Function, with slow sites offloaded to a GitHub Actions job; every pass logged, price changes snapshotted, duplicates across dealers collapsed',
+        'Fair price = median of active comparables (same model, year ±1, similar mileage), precomputed in materialized views',
+        'Vue 3 + Tailwind front end with URL-synced filters, autocomplete search, email sign-in, favorites and saved searches (RLS)',
+      ],
+      es: [
+        'Pipeline de ingesta en TypeScript: 13 adaptadores de fuentes (API firmada de Multiaviso, WooCommerce, Magento, islas de Astro…), cada uno testeado contra respuestas grabadas',
+        'Programado con pg_cron → Edge Function, con los sitios lentos derivados a un job de GitHub Actions; cada pasada se registra, los cambios de precio se guardan y los duplicados entre automotoras se unifican',
+        'Precio justo = mediana de autos comparables activos (mismo modelo, año ±1, kilometraje similar), precalculada en vistas materializadas',
+        'Frontend en Vue 3 + Tailwind con filtros en la URL, buscador con autocompletado, ingreso por email, favoritos y búsquedas guardadas (RLS)',
+      ],
+    },
+    language: 'TypeScript',
+    live: true,
+    url: 'https://vidriera-uy.vercel.app/',
+    screenshots: ['/projects/vidriera-1.png'],
+    tags: ['Data', 'Analytics', 'Supabase', 'Tailwind'],
+    gradient: 'linear-gradient(135deg, #060b1a 0%, #0c1a3d 50%, #2457f518 100%)',
+    accent: '#2457f5',
+  },
+  {
     name: 'Cuidauto',
     summary: {
       en: 'PWA for Uruguayan drivers: maintenance, legal deadlines (ITV, SOA, patente, libreta) and running costs in one place, with push reminders before anything expires.',
