@@ -1,5 +1,8 @@
 import { createApp } from 'vue'
 import { Quasar } from 'quasar'
+// SVG icon set so Quasar's built-in icons (carousel arrows/dots) render
+// without loading an icon font.
+import iconSet from 'quasar/icon-set/svg-mdi-v7'
 import 'quasar/src/css/index.sass'
 import './css/main.scss'
 import { inject as injectAnalytics } from '@vercel/analytics'
@@ -7,6 +10,7 @@ import App from './App.vue'
 
 createApp(App)
   .use(Quasar, {
+    iconSet,
     config: {
       dark: true,
       brand: { primary: '#22c55e' },
