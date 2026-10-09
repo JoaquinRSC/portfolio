@@ -2,6 +2,7 @@ const LANG_COLORS = {
   JavaScript: '#f1e05a',
   Vue:        '#41b883',
   TypeScript: '#3178c6',
+  Python:     '#3572a5',
 }
 
 export function langColor(lang) {
@@ -10,7 +11,7 @@ export function langColor(lang) {
 
 // Tags that carry the data story get accented on the card so a recruiter
 // scanning for that skillset sees it at a glance; the rest stay neutral.
-const HIGHLIGHT_TAGS = new Set(['Data', 'Analytics', 'Open Data'])
+const HIGHLIGHT_TAGS = new Set(['Data', 'Analytics', 'Open Data', 'Machine Learning'])
 
 export function isHighlightTag(tag) {
   return HIGHLIGHT_TAGS.has(tag)
@@ -61,6 +62,33 @@ export const projects = [
     tags: ['Data', 'Analytics', 'Supabase', 'Tailwind'],
     gradient: 'linear-gradient(135deg, #060b1a 0%, #0c1a3d 50%, #2457f518 100%)',
     accent: '#2457f5',
+  },
+  {
+    name: 'Vidriera Insights',
+    summary: {
+      en: 'Data analysis and machine-learning price model of the Uruguayan used-car market, built in Python on Vidriera’s data — 2,300 cars from 27 dealerships.',
+      es: 'Análisis de datos y modelo de machine learning de precios del mercado uruguayo de autos usados, hecho en Python sobre los datos de Vidriera — 2.300 autos de 27 automotoras.',
+    },
+    highlights: {
+      en: [
+        'Gradient boosting price model (scikit-learn) with 5-fold cross-validation: matches the comparables method at 10.6% error while pricing 100% of the stock instead of 56%',
+        'Per-model depreciation from log-linear fits, and the cost of mileage measured within the same model and year so age doesn’t leak in',
+        'Dealer pricing vs. market, fuel and gearbox segments, and dated snapshots that build a market history over time',
+        'pandas + NumPy core with 12 pytest tests; CI runs ruff and pytest, and a weekly GitHub Action regenerates the report',
+      ],
+      es: [
+        'Modelo de precio con gradient boosting (scikit-learn) y validación cruzada de 5 particiones: iguala al método de comparables con 10,6% de error y tasa el 100% del stock en vez del 56%',
+        'Depreciación por modelo con regresión log-lineal, y el costo del kilometraje medido dentro del mismo modelo y año para que no se mezcle la antigüedad',
+        'Precios de cada automotora vs. el mercado, segmentos por combustible y caja, y snapshots fechados que arman un historial del mercado',
+        'Núcleo en pandas + NumPy con 12 tests en pytest; CI con ruff y pytest, y una GitHub Action semanal que regenera el reporte',
+      ],
+    },
+    language: 'Python',
+    url: 'https://github.com/JoaquinRSC/vidriera-insights',
+    screenshots: ['/projects/vidriera-insights-1.png', '/projects/vidriera-insights-2.png'],
+    tags: ['Data', 'Machine Learning', 'Python', 'GitHub Actions'],
+    gradient: 'linear-gradient(135deg, #07101f 0%, #0b1e3a 50%, #3572a518 100%)',
+    accent: '#3572a5',
   },
   {
     name: 'Cuidauto',

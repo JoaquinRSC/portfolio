@@ -27,6 +27,7 @@ export const skills = [
   {
     cat: 'Languages',
     items: [
+      { name: 'Python', icon: icon('python'),  url: 'https://www.python.org' },
       { name: 'C#',   icon: icon('csharp'),    url: 'https://learn.microsoft.com/dotnet/csharp/' },
       { name: 'C',    icon: icon('c'),         url: 'https://en.wikipedia.org/wiki/C_(programming_language)' },
       { name: 'C++',  icon: icon('cplusplus'), url: 'https://isocpp.org' },
