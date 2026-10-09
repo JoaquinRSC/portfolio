@@ -38,18 +38,18 @@ export const projects = [
   {
     name: 'Vidriera',
     summary: {
-      en: 'Aggregator of the used-car stock of 27 Uruguayan dealerships — 2,300+ cars in one search, with price history, days in stock and a fair-price check against similar cars.',
-      es: 'Agregador del stock de usados de 27 automotoras uruguayas — más de 2.300 autos en una sola búsqueda, con historial de precios, días en stock y comparación contra autos similares.',
+      en: 'Aggregator of the used-car stock of 35 Uruguayan dealerships — 2,700+ cars in one search, with price history, days in stock and a fair-price check against similar cars.',
+      es: 'Agregador del stock de usados de 35 automotoras uruguayas — más de 2.700 autos en una sola búsqueda, con historial de precios, días en stock y comparación contra autos similares.',
     },
     highlights: {
       en: [
-        'Ingestion pipeline in TypeScript: 13 source adapters (Multiaviso signed API, WooCommerce, Magento, Astro islands…), each tested against recorded responses',
+        'Ingestion pipeline in TypeScript: 17 source adapters (Multiaviso signed API, WooCommerce, Magento, Astro islands, SvelteKit, Supabase REST…), each tested against recorded responses',
         'Scheduled on pg_cron → Edge Function, with slow sites offloaded to a GitHub Actions job; every pass logged, price changes snapshotted, duplicates across dealers collapsed',
         'Fair price = median of active comparables (same model, year ±1, similar mileage), precomputed in materialized views',
         'Vue 3 + Tailwind front end with URL-synced filters, autocomplete search, email sign-in, favorites and saved searches (RLS)',
       ],
       es: [
-        'Pipeline de ingesta en TypeScript: 13 adaptadores de fuentes (API firmada de Multiaviso, WooCommerce, Magento, islas de Astro…), cada uno testeado contra respuestas grabadas',
+        'Pipeline de ingesta en TypeScript: 17 adaptadores de fuentes (API firmada de Multiaviso, WooCommerce, Magento, islas de Astro, SvelteKit, REST de Supabase…), cada uno testeado contra respuestas grabadas',
         'Programado con pg_cron → Edge Function, con los sitios lentos derivados a un job de GitHub Actions; cada pasada se registra, los cambios de precio se guardan y los duplicados entre automotoras se unifican',
         'Precio justo = mediana de autos comparables activos (mismo modelo, año ±1, kilometraje similar), precalculada en vistas materializadas',
         'Frontend en Vue 3 + Tailwind con filtros en la URL, buscador con autocompletado, ingreso por email, favoritos y búsquedas guardadas (RLS)',
@@ -66,21 +66,21 @@ export const projects = [
   {
     name: 'Vidriera Insights',
     summary: {
-      en: 'Data analysis and machine-learning price model of the Uruguayan used-car market, built in Python on Vidriera’s data — 2,300 cars from 27 dealerships.',
-      es: 'Análisis de datos y modelo de machine learning de precios del mercado uruguayo de autos usados, hecho en Python sobre los datos de Vidriera — 2.300 autos de 27 automotoras.',
+      en: 'Data analysis and machine-learning price model of the Uruguayan used-car market, built in Python on Vidriera’s data — 2,600 cars from 35 dealerships.',
+      es: 'Análisis de datos y modelo de machine learning de precios del mercado uruguayo de autos usados, hecho en Python sobre los datos de Vidriera — 2.600 autos de 35 automotoras.',
     },
     highlights: {
       en: [
-        'Gradient boosting price model (scikit-learn) with 5-fold cross-validation: matches the comparables method at 10.6% error while pricing 100% of the stock instead of 56%',
-        'Per-model depreciation separating age from mileage, plus value kept vs. current 0 km list prices (e.g. a Fiat Strada keeps ~84% after 3 years, an Onix ~66%)',
+        'Gradient boosting price model (scikit-learn) with 5-fold cross-validation: within half a point of the comparables method (11.0% vs. 10.5% error) while pricing 100% of the stock instead of 57%',
+        'Per-model depreciation separating age from mileage, plus value kept vs. what the same model cost 0 km in its year (e.g. a Fiat Strada keeps ~85% after 3 years, a Peugeot 208 ~62%)',
         'Electric and hybrid market share, dealer pricing vs. market, and dated snapshots that build a market history over time',
-        'Live web estimator with conformally calibrated 80% price ranges; pandas + NumPy core, 20 pytest tests, CI and a weekly GitHub Action that refreshes the data',
+        'Live web estimator with conformally calibrated 80% price ranges; pandas + NumPy core, 23 pytest tests, CI and a weekly GitHub Action that refreshes the data',
       ],
       es: [
-        'Modelo de precio con gradient boosting (scikit-learn) y validación cruzada de 5 particiones: iguala al método de comparables con 10,6% de error y tasa el 100% del stock en vez del 56%',
-        'Depreciación por modelo separando edad y kilometraje, y valor que conserva frente al precio 0 km actual (una Fiat Strada conserva ~84% a los 3 años, un Onix ~66%)',
+        'Modelo de precio con gradient boosting (scikit-learn) y validación cruzada de 5 particiones: queda a medio punto del método de comparables (11,0% vs. 10,5% de error) y tasa el 100% del stock en vez del 57%',
+        'Depreciación por modelo separando edad y kilometraje, y valor que conserva frente a lo que costaba 0 km en su año (una Fiat Strada conserva ~85% a los 3 años, un Peugeot 208 ~62%)',
         'Participación de eléctricos e híbridos, precios de cada automotora vs. el mercado, y snapshots fechados que arman un historial del mercado',
-        'Tasador web en vivo con rangos de precio del 80% calibrados (conformal); núcleo en pandas + NumPy, 20 tests en pytest, CI y una GitHub Action semanal que actualiza los datos',
+        'Tasador web en vivo con rangos de precio del 80% calibrados (conformal); núcleo en pandas + NumPy, 23 tests en pytest, CI y una GitHub Action semanal que actualiza los datos',
       ],
     },
     language: 'Python',
