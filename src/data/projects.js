@@ -72,14 +72,14 @@ export const projects = [
     highlights: {
       en: [
         'Gradient boosting price model (scikit-learn) with 5-fold cross-validation: matches the comparables method at 10.6% error while pricing 100% of the stock instead of 56%',
-        'Per-model depreciation from log-linear fits, and the cost of mileage measured within the same model and year so age doesn’t leak in',
-        'Dealer pricing vs. market, fuel and gearbox segments, and dated snapshots that build a market history over time',
+        'Per-model depreciation separating age from mileage, plus value kept vs. current 0 km list prices (e.g. a Fiat Strada keeps ~84% after 3 years, an Onix ~66%)',
+        'Electric and hybrid market share, dealer pricing vs. market, and dated snapshots that build a market history over time',
         'pandas + NumPy core with 12 pytest tests; CI runs ruff and pytest, and a weekly GitHub Action regenerates the report',
       ],
       es: [
         'Modelo de precio con gradient boosting (scikit-learn) y validación cruzada de 5 particiones: iguala al método de comparables con 10,6% de error y tasa el 100% del stock en vez del 56%',
-        'Depreciación por modelo con regresión log-lineal, y el costo del kilometraje medido dentro del mismo modelo y año para que no se mezcle la antigüedad',
-        'Precios de cada automotora vs. el mercado, segmentos por combustible y caja, y snapshots fechados que arman un historial del mercado',
+        'Depreciación por modelo separando edad y kilometraje, y valor que conserva frente al precio 0 km actual (una Fiat Strada conserva ~84% a los 3 años, un Onix ~66%)',
+        'Participación de eléctricos e híbridos, precios de cada automotora vs. el mercado, y snapshots fechados que arman un historial del mercado',
         'Núcleo en pandas + NumPy con 12 tests en pytest; CI con ruff y pytest, y una GitHub Action semanal que regenera el reporte',
       ],
     },
